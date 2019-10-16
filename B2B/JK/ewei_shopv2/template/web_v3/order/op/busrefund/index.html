@@ -1,0 +1,943 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+        <script> document.documentElement.style.fontSize =document.documentElement.clientWidth/750*40 +"px";</script>
+        <meta name="format-detection" content="telephone=no" />
+        <title>广东集和堂医药有限公司</title>
+        <link rel="shortcut icon" href="{$_W['siteroot']}{$_W['config']['upload']['attachdir']}/{if !empty($_W['setting']['copyright']['icon'])}{$_W['setting']['copyright']['icon']}{else}images/global/wechat.jpg{/if}" />
+        <link rel="stylesheet" type="text/css" href="../addons/ewei_shopv2/static/js/dist/foxui/css/foxui.min.css?v=0.2">
+        <link rel="stylesheet" type="text/css" href="../addons/ewei_shopv2/template/mobile/default/static/css/style.css?v=1558676762">
+        <link rel="stylesheet" type="text/css" href="../addons/ewei_shopv2/static/fonts/iconfont.css?v=2017070719">
+        <!--<link rel="stylesheet" href="//at.alicdn.com/t/font_82607_e93d131lklr6n7b9.css">-->
+        <script src="./resource/js/lib/jquery-1.11.1.min.js"></script>
+       <script src='//res.wx.qq.com/open/js/jweixin-1.3.0.js'></script>
+<!--   <script src="../addons/ewei_shopv2/static/js/dist/foxui/js/foxui.min.js"></script>-->
+        <script src="../addons/ewei_shopv2/static/js/require.js"></script>
+        <script src="../addons/ewei_shopv2/static/js/myconfig-app.js"></script>
+        <script language="javascript">require(['core'],function(modal){modal.init({siteUrl: "{$_W['siteroot']}",baseUrl: "{php echo webUrl('order/op/busrefund')}"})});</script>
+        <link rel="stylesheet" type="text/css" href="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/css/layui.css?v=0.2">
+        <script src="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/layui.js"></script>
+        <style type="text/css">
+
+
+            body {
+
+                position: absolute;;
+
+                max-width: 750px;  margin:auto;
+
+            }
+
+            .fui-navbar {
+
+                max-width:750px;
+
+            }
+
+            .fui-navbar,.fui-footer  {
+
+                max-width:750px;
+
+            }
+
+            .fui-page.fui-page-from-center-to-left,
+
+            .fui-page-group.fui-page-from-center-to-left,
+
+            .fui-page.fui-page-from-center-to-right,
+
+            .fui-page-group.fui-page-from-center-to-right,
+
+            .fui-page.fui-page-from-right-to-center,
+
+            .fui-page-group.fui-page-from-right-to-center,
+
+            .fui-page.fui-page-from-left-to-center,
+
+            .fui-page-group.fui-page-from-left-to-center {
+
+                -webkit-animation: pageFromCenterToRight 0ms forwards;
+
+                animation: pageFromCenterToRight 0ms forwards;
+
+            }
+
+        </style>
+
+        
+
+
+        
+
+
+        <style>.danmu {display: none;opacity: 0;}</style>
+    </head>
+
+
+
+    <body ontouchstart>
+
+
+
+        <div class='fui-page-group '>
+
+            
+<style>
+
+    .fui-footer .btn{
+
+        border-radius: 1rem;
+
+        margin-top: .6rem;
+
+        min-width: 4.1rem;
+
+    }
+
+    .fui-footer{
+
+        padding-right: .6rem;
+
+    }
+
+    .fui-footer .btn.btn-default-o {
+
+        border-color: #666;
+
+        color: #666;
+
+    }
+
+    .fui-title.r-group{
+
+        background: #f3f3f3;
+
+        margin: 0;
+
+        padding: .5rem .6rem;
+
+    }
+
+    .fui-cell-group .fui-cell.noborder:before{
+
+        border:0;
+
+    }
+
+    .refuse_reason{
+
+        padding: 0.5rem;
+
+        background: #626674;
+
+        color: #FFF;
+
+        font-size: 0.65rem;
+
+        line-height: 1rem
+
+    }
+
+</style>
+
+{if $goodsid}
+<div class='fui-page {if empty($refundOne)}fui-page-current{/if}' id='page-refund-edit' >
+
+<div class="fui-header">
+    <div class="fui-header-left">
+
+        <a class="back" onclick='history.back()'></a>
+
+    </div>
+
+    <div class="title">发起退款</div>
+
+    <div class="fui-header-right">&nbsp;</div>
+
+</div>
+
+<div class='fui-content  navbar'>
+
+
+
+    {if  strlen($trade['refundcontent']) >0}
+
+    <div class="refuse_reason">
+
+        退款须知：<br/>{$trade['refundcontent']}
+
+    </div>
+
+    {/if}
+
+
+
+    <div class="fui-cell-group">
+
+        <div class="fui-cell">
+
+            <div class="fui-cell-label">处理方式</div>
+
+            <div class="fui-cell-info">
+
+
+
+                <select id="rtype">
+
+                    {if $canreturns == 1}
+
+                    <!--当产品金额被余额全部抵扣之后.允许换货-->
+
+                    <option value="2" {if $refund['rtype']=='2'}selected{/if}>换货</option>
+
+                    {else}
+
+                        {if $order['status']==2 || $order['status']==3}
+
+                        <option value="1" {if $refund['rtype']=='1'}selected{/if}>退货退款</option>
+
+                        {/if}
+
+                        <option value="0" {if $refund['rtype']=='0'}selected{/if}>退款</option>
+
+                    {/if}
+
+                </select>
+
+            </div>
+
+            <div class="fui-cell-remark"></div>
+
+
+
+        </div>
+
+        <div class="fui-cell">
+
+            <div class="fui-cell-label"><span class="re-g">{if $refund['rtype']=='2'}换货{else}退款{/if}</span>原因</div>
+
+            <div class="fui-cell-info">
+
+
+
+                <select id="reason">
+
+                    <option value="缺货" {if $refund['reason']=='缺货'}selected{/if}>缺货</option>
+
+                    <option value="漏发了/订单信息错误" {if $refund['reason']=='漏发了/订单信息错误'}selected{/if}>漏发了/订单信息错误</option>
+
+                    <option value="订单退回" {if $refund['reason']=='订单退回'}selected{/if}>订单退回</option>
+
+                    <option value="其它" {if $refund['reason']=='其它'}selected{/if}>其它</option>
+
+                </select>
+
+            </div>
+
+            <div class="fui-cell-remark"></div>
+
+        </div>
+
+
+
+        <div class="fui-cell">
+
+            <div class="fui-cell-label"><span class="re-g">{if $refund['rtype']=='2'}换货{else}退款{/if}</span>说明</div>
+
+            <div class="fui-cell-info c000" >
+
+                <input type="text" id="content" class='fui-input' placeholder="选填" value="{$refund['content']}"/>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="fui-cell r-group" {if $refund['rtype']=='2'}style="display:none;"{/if}>
+
+        <div class="fui-cell-label">{if empty($goodsid)}退款金额{else}退单数量{/if}</div>
+
+        <div class="fui-cell-info c000" style="    display: -webkit-box;display: -webkit-flex;display: -ms-flexbox;display: flex;-webkit-box-align: center;-webkit-align-items: center;-ms-flex-align: center;align-items: center;">
+
+            {if !empty($goodsid)}
+            <input type="number" id="number" class='fui-input' placeholder="请输入需要退的数量" value="{php echo $orderOne['total']}" />
+            {else}
+            ￥<input type="number" id="price" class='fui-input' placeholder="请输入需要退的金额" value="{php echo number_format($order['refundprice'],2)}" />
+            {/if}
+            <!--value="{if !empty($refund['id'])}{php echo $show_price}{/if}"-->
+            <input type="hidden" id="goodsid" value="{$goodsid}" />
+            <input type="hidden" id="refundid" value="{$order['refundid']}" />
+        </div>
+
+
+
+
+
+    </div>
+
+    <div class="fui-cell">
+
+        <div class="fui-cell-label">上传凭证</div>
+
+        <div class="fui-cell-info">
+
+
+
+            <ul class="fui-images fui-images-sm" id="images">
+
+
+
+                {loop $refund['imgs'] $k $v}
+
+                <input type="hidden" name="images[]" value="{$v}" />
+
+                <li style="background-image:url({php echo tomedia($v)})" class="image image-sm" data-filename="{$v}">
+
+                    <span class="image-remove"><i class="icon icon-close"></i></span>
+
+                    <img src="{php echo tomedia($v)}" alt="" style="opacity: 0;width:100%;height:100%;">
+
+                </li>
+
+                {/loop}
+
+
+
+
+
+            </ul>
+
+            <div class="fui-uploader fui-uploader-sm refund-container-uploader" {if count($refund['imgs'])==5}style='display:none'{/if}
+
+            data-name="images[]"
+
+            data-max="5"
+
+            data-count="{php echo count($refund['imgs'])}">
+
+            <input type="file" name='imgFile' id='imgFile0'>
+
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+
+<div class='fui-title r-group'  {if $refund['rtype']=='2'}style="display:none;"{/if}>
+{if !empty($goodsid)}
+<span class='text-danger'>*提示:您可退款的最大数量为：{php echo $orderOne['total']} 件</span>
+{else}
+<span class='text-danger'>*提示:您可退款的最大金额为￥{php echo number_format($order['refundprice'],2)},整单退款请不要更改金额。</span>
+{/if}
+</div>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+<div class='fui-footer text-right'>
+
+    <a class='btn btn-sm btn-danger-o btn-submit'>提交申请</a>
+
+    <a class="btn btn-sm btn-default-o back">取消</a>
+
+</div>
+
+</div>
+
+
+
+<div class='fui-page  {if !empty($refundOne)}fui-page-current{/if}' id='page-refund-info'>
+
+<div class="fui-header">
+
+    <div class="fui-header-left">
+
+        <a class="back" onclick='history.back()'></a>
+
+    </div>
+
+    <div class="title">发起退款</div>
+
+    <div class="fui-header-right">&nbsp;</div>
+
+</div>
+
+<div class='fui-content  navbar'>
+
+    <div class='fui-cell-group'>
+
+            <div class='fui-cell noborder' style="padding-bottom: 0">
+
+                <!--<i class='icon icon-info'></i>-->
+
+                    <span class="text">{if $refundOne['status']==0}等待买家处理{if $order['status']==1}退款{else}售后{/if}申请{/if}
+
+                        {if $refundOne['status']>=3}已经通过{if $order['status']==1}退款{/if}申请{/if}
+
+                    </span>
+
+            </div>
+
+            <div class='fui-cell'  style="color: #999;font-size: .65rem;line-height: 1.2rem">
+
+                    {if $refundOne['rtype']==0}
+
+                    {if $refundOne['status']==0}
+
+                    退款申请流程： <br>1、发起退款申请<br>2、商家确认后退款到您的账户
+
+                    如果商家未处理：请及时与商家联系
+
+                    {/if}
+
+                    {elseif $refundOne['rtype']==1}
+
+                    退款退货申请流程：<br>1、发起退款退货申请<br>2、退货需将退货商品邮寄至商家指定地址，并在系统内输入快递单号<br>3、商家收货后确认无误<br>4、退款到您的账户
+
+                    {elseif $refundOne['rtype']==2}
+
+                    换货申请流程：<br>1、发起换货申请，并把快递单号录入系统<br>2、将需要换货的商品邮寄至商家指定地址，并在系统内输入快递单号<br>3、商家确认后货后重新发出商品<br>4、签收确认商品
+
+                    {/if}
+
+            </div>
+
+    </div>
+
+    {if $refundOne['status']>=3}
+
+
+
+    {if !empty($refundOne['refundaddress'])}
+
+    <div class="fui-list-group" style='margin-top:5px;'>
+
+        <div class="fui-list-group-title"><i class='icon icon-location'></i> 退货地址</div>
+
+        <div class="fui-list">
+
+            <div class="fui-list-media"></div>
+
+            <div class="fui-list-inner">
+
+                <div class='text'>{$refund['refundaddress']['province']}{$refund['refundaddress']['city']}{$refund['refundaddress']['area']} {$refund['refundaddress']['address']}</div>
+
+                <div class='subtitle'>{$refund['refundaddress']['name']} {$refund['refundaddress']['mobile']} {$refund['refundaddress']['tel']}</div>
+
+            </div>
+
+        </div>
+
+        {if !empty($refundOne['message'])}
+
+        <div class="fui-list-group-title"><i class='icon icon-message'></i> 卖家留言</div>
+
+        <div class="fui-list">
+
+            <div class="fui-list-media"></div>
+
+            <div class="fui-list-inner">
+
+                <div class='text'><span class='text-danger'>{$refund['message']}</span></div>
+
+
+
+            </div>
+
+        </div>
+
+        {/if}
+
+
+
+
+
+
+
+    </div>
+
+    {/if}
+
+
+
+    {if $refundOne['rtype']==1 || $refundOne['rtype']==2}
+
+
+
+    <div class="fui-cell-group">
+
+
+
+        <a class="fui-cell {if $refund['status']==3}fui-cell-click{/if}" {if $refundOne['status']==3}href='#page-refund-express'{/if}>
+
+        <div class="fui-cell-label">{if $refundOne['rtype']==1}退货{else}换货{/if}状态</div>
+
+        <div class='fui-cell-info'></div>
+
+        <div class='fui-cell-remark  {if $refundOne['status']!=3}noremark{/if}'>
+
+        {if $refundOne['status']==3}
+
+        需填写快递单号
+
+        {elseif $refundOne['status']==4}
+
+        等待商家确认
+
+        {elseif $refundOne['status']==5}
+
+        商家已经发货
+
+        {/if}</div>
+
+    </a>
+
+
+
+    {if !empty($refundOne['rexpresssn'])}
+
+    <div class="fui-cell">
+
+        <div class="fui-cell-label">{if $refundOne['rtype']==1}退货{else}换货{/if}快递公司</div>
+
+        <div class='fui-cell-info'>{$refundOne['rexpresscom']}</div>
+
+    </div>
+
+    <div class="fui-cell">
+
+        <div class="fui-cell-label">{if $refundOne['rtype']==1}退货{else}换货{/if}快递单号</div>
+
+        <div class='fui-cell-info'>{$refundOne['rexpresssn']}</div>
+
+    </div>
+
+    {/if}
+
+</div>
+
+{/if}
+
+
+
+{/if}
+
+
+
+<div class='fui-title'>协商详情</div>
+
+<div class="fui-cell-group">
+
+    <div class="fui-cell">
+
+        <div class="fui-cell-label">处理方式</div>
+
+        <div class="fui-cell-info">
+
+
+
+        </div>
+
+        <div class="fui-cell-remark noremark">
+
+            {if $refundOne['rtype']==0}
+
+            退款
+
+            {elseif $refundOne['rtype']==1}
+
+            退货退款
+
+            {else}
+
+            换货{/if}
+
+        </div>
+
+    </div>
+
+    <div class="fui-cell">
+
+        <div class="fui-cell-label">{if $refundOne['rtype']=='2'}换货{else}退款{/if}原因</div>
+
+        <div class="fui-cell-info "></div>
+
+        <div class="fui-cell-remark noremark">
+
+            {$refundOne['reason']}
+
+        </div>
+
+        </div>
+
+    <div class="fui-cell">
+
+        <div class="fui-cell-label">{if $refundOne['rtype']=='2'}换货{else}退款{/if}说明</div>
+
+        <div class="fui-cell-info "></div>
+
+        <div class="fui-cell-remark noremark">{if empty($refundOne['content'])}无{else}{$refundOne['content']} {/if}</div>
+
+        </div>
+
+    {if $refundOne['applyprice']>0 && $refundOne['rtype']!=2}
+
+    <div class="fui-cell">
+
+        <div class="fui-cell-label">退单数量</div>
+
+        <div class="fui-cell-info"></div>
+
+        <div class="fui-cell-remark noremark">{$refundOne['refundnum']} 件</div>
+
+    </div>
+
+    {/if}
+
+
+
+    <div class="fui-cell">
+
+        <div class="fui-cell-label">申请时间</div>
+
+        <div class="fui-cell-info"></div>
+
+        <div class="fui-cell-remark noremark">{php echo date('Y-m-d H:i',$refundOne['createtime'])} </div>
+
+    </div>
+    <input type="hidden" id="goodsid" value="{$goodsid}" />
+    <input type="hidden" id="refundid" value="{$order['refundid']}" />
+
+
+</div>
+
+
+
+</div>
+
+<div class='fui-footer text-right'>
+
+    {if $refundOne['rtype']==2 && $refundOne['status']==5}
+
+    <div class="btn btn-sm btn-danger-o btn-receive">确认收到换货物品</div>
+
+    <a external data-nocache="true" href="{php echo mobileUrl('order/refund/refundexpress',array('id'=>$order['id'], 'express'=>$refundOne['rexpress'], 'expresscom'=>$refundOne['expresscom'],'expresssn'=>$refundOne['rexpresssn']))}"><div class="btn btn-sm  btn-default-o">查看换货物流</div></a>
+
+    {/if}
+
+
+
+    {if $refund['status']==3 || $refund['status']==4}
+
+    <a data-nocache="true" class="btn btn-sm btn-danger-o" href='#page-refund-express'>{if empty($refundOne['express'])}填写{else}修改{/if}快递单号</a>
+
+    {/if}
+
+
+
+    {if $refundOne['status']==0}
+
+    <a data-nocache="true" class='btn btn-sm btn-danger-o btn-edit' href='#page-refund-edit'>修改申请</a>
+
+    {/if}
+
+
+
+    {if $refund['status']!=5}
+
+    <a class='btn btn-sm btn-default-o btn-cancel'>取消发起</a>
+
+    {/if}
+
+</div>
+
+</div>
+
+
+
+<div class='fui-page' id='page-refund-express'>
+
+    <div class="fui-header">
+
+        <div class="fui-header-left">
+
+            <a class="back" onclick='history.back()'></a>
+
+        </div>
+
+        <div class="title">{if $order['status']==1}退款{else}售后{/if}申请</div>
+
+        <div class="fui-header-right">&nbsp;</div>
+
+    </div>
+
+    <div class='fui-content margin'>
+
+        <input type='hidden' id='express_old' value="{$refund['express']}"/>
+
+        <input type="hidden" name="expresscom" id="expresscom" value="{$refund['expresscom']}">
+
+        <div class="fui-cell-group">
+
+            <div class='fui-cell-title'>填写快递单号</div>
+
+            <div class="fui-cell">
+
+                <div class="fui-cell-label">快递公司</div>
+
+                <div class="fui-cell-info"><select id="express" name="express">
+
+                    <option value="" data-name="其他快递">其他快递</option>
+
+
+
+                    {loop $express_list $value}
+
+                    <option value="{$value['express']}" data-name="{$value['name']}">{$value['name']}</option>
+
+                    {/loop}
+
+                </select></div>
+
+            </div>
+
+            <div class="fui-cell">
+
+                <div class="fui-cell-label">快递单号</div>
+
+                <div class="fui-cell-info"><input type="text" id="expresssn" class='fui-input' value="{$refund['expresssn']}" max="50"/></div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <div class='fui-footer text-right'>
+
+        <div class="btn btn-sm btn-danger-o" id='express_submit'>提交快递单号</div>
+
+        <a class="btn btn-sm btn-default-o back">返回</a>
+
+    </div>
+
+    
+
+</div>
+{/if}
+
+
+
+
+
+
+<script language='javascript'>
+
+        // require(['../web/biz/order/refund'], function (modal) {
+
+        //     modal.init({orderid: "{$orderid}",refundid:"{$refundid}"});
+
+        // });
+
+            var refundid = $('#refundid').val();
+            $('.btn-submit').click(function() {
+                if ($(this).attr('stop')) {
+                    return
+                }
+                if ($('#rtype').val() != 2) {
+                    var goodsid = $('#goodsid').val();
+
+                    if(goodsid > 0){
+                        if ($('#number').val() < 0) {
+                        FoxUI.toast.show('请输入正确的退货数量!');
+                        return
+                        }
+                    }
+                }
+            var images = [];
+            $('#images').find('li').each(function() {
+                images.push($(this).data('filename'))
+            });
+            $(this).attr('stop', 1).html('正在处理...');
+            $.ajax({
+                url:"{php echo webUrl('order/op/busrefund/submit')}",
+                type:"post",
+                dataType:"json",
+                data:{
+                'id': {$_GPC['id']},
+                'goodsid':$('#goodsid').val(),
+                'number':$('#number').val(),
+                'rtype': $('#rtype').val(),
+                'reason': $('#reason').val(),
+                'content': $('#content').val(),
+                'images': images,
+                'price': $('#price').val()
+            },
+                success:function(data){
+                    window.location.href = "{php echo webUrl('order/detail',array('id'=>$_GPC['id']))}" ;
+                    return
+
+                }
+                })
+            });
+       
+
+
+
+
+
+        $('.btn-cancel').click(function() {
+            if ($(this).attr('stop')) {
+                return
+            }
+            FoxUI.confirm('确定您要取消申请?', '', function() {
+                $(this).attr('stop', 1).attr('buttontext', $(this).html()).html('正在处理..');
+                core.json('order/op/busrefund/cancel', {
+                    'id': {$_GPC['id']},
+                    'goodsid':$('#goodsid').val(),
+                }, function(postjson) {
+                    if (postjson.status == 1) {
+                        location.href = core.getUrl('order/detail', {
+                            id: modal.params.orderid
+                        });
+                        return
+                    } else {
+                        FoxUI.toast.show(postjson.result.message)
+                    }
+                    $('.btn-cancel').removeAttr('stop').html($('.btn-cancel').attr('buttontext')).removeAttr('buttontext')
+                }, true, true)
+            })
+        });
+        $("select[name=express]").val($('#express_old').val()).change(function() {
+            var obj = $(this);
+            var sel = obj.find("option:selected");
+            var name = sel.data("name");
+            $(":input[name=expresscom]").val(name)
+        });
+
+
+        $('#express_submit').click(function() {
+            if ($(this).attr('stop')) {
+                return
+            }
+            if ($('#expresssn').isEmpty()) {
+                FoxUI.toast.show('请填写快递单号');
+                return
+            }
+            $(this).html('正在处理...').attr('stop', 1);
+            core.json('order/op/busrefund/express', {
+                id: {$_GPC['id']},
+                refundid: refundid,
+                express: $('#express').val(),
+                expresscom: $('#expresscom').val(),
+                expresssn: $('#expresssn').val()
+            }, function(postjson) {
+                if (postjson.status == 1) {
+                    location.href = core.getUrl('order/detail', {
+                        id: {$_GPC['id']},
+                    })
+                } else {
+                    $('#express_submit').html('确认').removeAttr('stop');
+                    FoxUI.toast.show(postjson.result.message)
+                }
+            }, true, true)
+        });
+
+
+        $('.btn-receive').click(function() {
+            if ($(this).attr('stop')) {
+                return
+            }
+            FoxUI.confirm('确认您已经收到换货物品?', '', function() {
+                $(this).attr('stop', 1).html('正在处理...');
+                core.json('order/op/busrefund/receive', {
+                    refundid: refundid,
+                    id: {$_GPC['id']},
+                }, function(postjson) {
+                    if (postjson.status == 1) {
+                        location.href = core.getUrl('order/detail', {
+                            id: modal.params.orderid
+                        })
+                    } else {
+                        $('.btn-receive').html('确认收到换货物品').removeAttr('stop');
+                        FoxUI.toast.show(postjson.result.message)
+                    }
+                }, true, true)
+            })
+        });
+
+     </script>
+
+        <script>
+            layui.use('upload', function() {
+                var upload = layui.upload;
+                //执行实例
+                var uploadInst = upload.render({
+                    elem: '#imgFile0' //绑定元素
+                    ,size: 1024*20 //限定大小
+                    ,accept:'images'
+                    ,exts:'jpg|png|gif|bmp|jpeg'
+                    ,url: "{php echo webUrl('order/op/busrefund/upload')}" //上传接口
+                    ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                        layer.load(1); //上传loading
+                    }
+                    ,done: function(res){
+                        //上传完毕回调
+                        layer.closeAll('loading'); //关闭loading
+                        if(res.status == 'success'){
+                            var html = '';
+                            html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                            html += '<span id="del_img" class="image-remove">';
+                            html += '<i class="icon icon-close"></i>';
+                            html += '</span>';
+                            html += '<input type="hidden" id="file_images" name="" value="'+res.filename+'">';
+                            html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                            html += '</li>';
+                            $("#images").append(html);
+                            $("#up").hide();
+
+                            //删除图片
+                            $('#del_img').on('click',function () {
+                                layer.confirm('确定删除图片吗？', function(index){
+                                    var file = $("#file_images").val();
+                                    $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                        $("#images li").remove();
+                                        $("#up").show();
+                                    });
+                                    layer.close(index);
+                                });
+                            })
+
+                        }else{
+                            layer.msg(res.message);
+                        }
+                    }
+                    ,error: function(res){
+                        //请求异常回调
+                        layer.closeAll('loading'); //关闭loading
+                    }
+                });
+            });
+
+        </script>
+
+<span style="display:none"></span>
+</body>
+</html>
+

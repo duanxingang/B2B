@@ -1,0 +1,347 @@
+{template '_header'}
+<link rel="stylesheet" type="text/css" href="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/css/layui.css?v=0.2">
+<script src="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/layui.js"></script>
+<style>
+    .banks-title{
+        height: 2.2rem;
+        line-height: 2.2rem;
+        font-size: .8rem;
+        text-align: center;
+    }
+    .b-message{
+        width: 90%;
+        margin: 0 auto;
+    }
+    .b-message ul li{
+        list-style:none;
+        line-height: 2rem;
+        font-size: .7rem;
+    }
+    .b-message-info{
+        font-size: .75rem;
+    }
+    .m-last{
+        line-height: 1rem !important;
+        padding-top: 0.5rem;
+    }
+    .m-last span{
+        font-size: .65rem;
+        color: #ff5555;
+    }
+    .c-btu{
+        margin-top: 2rem;
+    }
+    .c-btu a{
+        display: inline-block;
+        width: 48%;
+        text-align: center;
+        padding: 0.3rem 0;
+        font-size: 0.8rem;
+    }
+    .c-btu-a{
+        border: 1px solid #ff5555;
+        border-radius: 6%;
+        background-color: #ff6600;
+        color: #fff;
+    }
+    .c-btu-b{
+        border: 1px solid #ccc;
+        border-radius: 6%;
+        color: #6b6b6b;
+    }
+
+    .fui-uploader-sm{
+        width: 8rem !important;
+        height: 5rem !important;
+    }
+    .image-sm{
+        width: 8rem !important;
+        height: 5rem !important;
+    }
+    .fui-images .image .image-remove{
+        width: 1.5rem!important;
+        height: 1.5rem!important;
+    }
+    .fui-images .image .image-remove i{
+        font-size: 1.5rem!important;
+    }
+</style>
+<div class='fui-page  fui-page-current order-pay-page'>
+    <div class="fui-header">
+        <div class="fui-header-left">
+            <a class="back" onclick='history.back()'></a>
+        </div>
+        <div class="title" style='margin-right:-2rem;'>收银台</div>
+        <div class="fui-header-right">
+            <!--<a href="{php echo mobileUrl('order')}" class="external">我的订单</a>-->
+        </div>
+    </div>
+    <div class='fui-content '>
+        <div class="fui-cell-group" style="margin-top: 0">
+            <div class="fui-cell">
+                <div class="fui-cell-label">订单编号</div>
+                <div class="fui-cell-info"></div>
+                <div class="fui-cell-remark noremark">{$order['ordersn']}</div>
+            </div>
+            <div class="fui-cell">
+                <div class="fui-cell-label">订单金额</div>
+                <div class="fui-cell-info"></div>
+                <div class="fui-cell-remark noremark"><span class='text-danger bigprice'>￥{if empty($ispeerpay)}{php echo number_format($order['price'],2)}{else}<span id="peerpay">{php echo number_format($peerprice,2)}</span>{/if}</span>
+                </div>
+            </div>
+        </div>
+
+        <!--非票银行转账-->
+        {if $banks2['success']}
+        <div class='fui-list-group' style="margin-top:10px;padding-bottom: 20px">
+            <p class="banks-title">银行转账(对私)</p>
+            <div class="b-message">
+                <ul>
+                    <li>银行卡号:
+                        <span class="b-message-info">{$banks2['banks_info2']['banks_card2']}</span>
+                    </li>
+                    <li>开户银行:
+                        {$banks2['banks_info2']['banks_name2']}
+                    </li>
+                    <li>开户人&nbsp;&nbsp;&nbsp;&nbsp;:
+                        {$banks2['banks_info2']['banks_user_name2']}
+                    </li>
+                    <li>
+                        <div style="float: left;">转账截图:</div>
+                        <ul class="fui-images fui-images-sm" id="images0">
+
+                        </ul>
+                        <div id="test0" class="fui-uploader fui-uploader-sm" data-max="5" data-count="0">
+                            <input type="file" name='imgFile' id='imgFile0' multiple="" accept="image/*" >
+                            <img style="display: none;width: 100%;height: 100%" src="" />
+                        </div>
+                    </li>
+
+                    <li style="clear: both" class="m-last">
+                        <span>温馨提示：请认真核对银行卡号信息，转账成功后记得点击下方的确定按钮并联系客服哦^_^！</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="b-message c-btu">
+                <a class="c-btu-a" href="javascript:;" onclick="queren('1','{$order['id']}');">确认</a>
+                <a class="c-btu-b" href="javascript:;" onclick="gobacks('{$order['id']}');">返回</a>
+            </div>
+        </div>
+        {/if}
+
+        <!--银行转账-->
+        {if $banks['success']}
+        <div class='fui-list-group' style="margin-top:10px;padding-bottom: 20px">
+            <p class="banks-title">银行转账(对公)</p>
+            <div class="b-message">
+                <ul>
+                    <li>银行卡号:
+                        <span class="b-message-info">{$banks['banks_info']['banks_card']}</span>
+                    </li>
+                    <li>开户银行:
+                        {$banks['banks_info']['banks_name']}
+                    </li>
+                    <li>开户人&nbsp;&nbsp;&nbsp;&nbsp;:
+                        {$banks['banks_info']['banks_user_name']}
+                    </li>
+                    <li>
+                        <div style="float: left;">转账截图:</div>
+                        <ul class="fui-images fui-images-sm" id="images1">
+
+                        </ul>
+                        <div id="test1" class="fui-uploader fui-uploader-sm" data-max="5" data-count="0">
+                            <input type="file" name='imgFile' id='imgFile1' multiple="" accept="image/*" >
+                            <img style="display: none;width: 100%;height: 100%" src="" />
+                        </div>
+                    </li>
+                    <li style="clear: both" class="m-last">
+                        <span>温馨提示：请认真核对银行卡号信息，转账成功后记得点击下方的确定按钮并联系客服哦^_^！</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="b-message c-btu">
+                <a class="c-btu-a" href="javascript:;" onclick="queren('1','{$order['id']}');">确认</a>
+                <a class="c-btu-b" href="javascript:;" onclick="gobacks('{$order['id']}');">返回</a>
+            </div>
+        </div>
+        {/if}
+
+        <!--周期支付-->
+        {if $branch['success']}
+        <div class='fui-list-group' style="margin-top:10px;padding-bottom: 20px">
+            <p class="banks-title">周期付款</p>
+            <div class="b-message">
+                <ul>
+                    <li style="line-height: 1.2rem">
+                        温馨提示：您的周期付款天数为
+                        <span style="color: #ff5555;font-size: .8rem">{$branch['branch_info']}</span>
+                        天。 在这期间您可不用支付当前订单也能在商城继续下单，
+                        如超出期限未支付则不能再下单，
+                        需完成之前订单的支付才能继续下单哦^_^！
+                    </li>
+
+                </ul>
+            </div>
+            <div class="b-message c-btu">
+                <a class="c-btu-a" href="javascript:;" onclick="queren('2','{$order['id']}');">确认</a>
+                <a class="c-btu-b" href="javascript:;" onclick="gobacks('{$order['id']}');">返回</a>
+            </div>
+        </div>
+        {/if}
+
+
+
+
+
+    </div>
+
+    <input type="hidden" id="file_images" value="">
+
+</div>
+
+<script>
+
+    layui.use(['layer','upload'], function(){
+        var $ = layui.jquery
+            ,upload = layui.upload
+            ,layer = layui.layer;
+
+
+        upload.render({
+            elem: '#imgFile0'
+            ,field:'imgFile'
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    var html = '';
+                    html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                    html += '<span id="del_img1" class="image-remove">';
+                    html += '<i class="icon icon-close"></i>';
+                    html += '</span>';
+                    html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                    html += '</li>';
+                    $("#images0").append(html);
+                    $("#test0").hide();
+                    $("#file_images").attr('value',res.filename);
+                    //删除图片
+                    $('#del_img1').on('click',function () {
+                        layer.confirm('确定删除图片吗？', function(index){
+                            var file = $("#file_images").val();
+                            $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                $("#images0 li").remove();
+                                $("#test0").show();
+                                $("#file_images").attr('value','');
+                            });
+                            layer.close(index);
+                        });
+                    })
+
+
+
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        upload.render({
+            elem: '#imgFile1'
+            ,field:'imgFile'
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    var html = '';
+                    html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                    html += '<span id="del_img2" class="image-remove">';
+                    html += '<i class="icon icon-close"></i>';
+                    html += '</span>';
+                    html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                    html += '</li>';
+                    $("#images1").append(html);
+                    $("#test1").hide();
+                    $("#file_images").attr('value',res.filename);
+                    //删除图片
+                    $('#del_img2').on('click',function () {
+                        layer.confirm('确定删除图片吗？', function(index){
+                            var file = $("#file_images").val();
+                            $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                $("#images1 li").remove();
+                                $("#test1").show();
+                                $("#file_images").attr('value','');
+                            });
+                            layer.close(index);
+                        });
+                    })
+
+
+
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+
+    });
+
+    function gobacks(id) {
+        window.location = "{php echo mobileUrl('order/pay')}&id="+id;
+    }
+
+    function queren(type,id){
+        var images = $("#file_images").val();
+        $.ajax({
+            url:"{php echo mobileUrl('order/pay/cpay')}",
+            data:{
+                "type":type,
+                "id":id,
+                "images":images
+            },
+            type:"POST",
+            success:function(req){
+                var jsonObj =  JSON.parse(req);
+                if(jsonObj.status == 1){
+
+                    layer.msg('操作成功', {
+                        time: 2000
+                    }, function(){
+                        window.location = "{php echo mobileUrl('order')}";
+                    });
+
+                }else{
+                    layer.msg(jsonObj.result.message);
+                }
+            }
+        });
+    }
+
+</script>
+
+{if is_ios()}
+{php $initWX=true}
+{/if}
+{template '_footer'}

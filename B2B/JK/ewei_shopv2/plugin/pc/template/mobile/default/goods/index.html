@@ -1,0 +1,417 @@
+{template 'pc/layout/_header'}
+<script src="../addons/ewei_shopv2/plugin/pc/template/mobile/default/static/js/search_goods.js"></script>
+<link href="../addons/ewei_shopv2/plugin/pc/template/mobile/default/static/css/layout.css" rel="stylesheet" type="text/css">
+<style>
+	.pagination li span.currentpage {
+		color: #FFF;
+		font-weight: bold;
+		background-color: #F87622;
+		border-color: #FC6520;
+		position: relative;
+		z-index: 2;
+	}
+	.trote{
+		transform:rotate(180deg);
+		-ms-transform:rotate(180deg); 	/* IE 9 */
+		-moz-transform:rotate(180deg); 	/* Firefox */
+		-webkit-transform:rotate(180deg); /* Safari 和 Chrome */
+		-o-transform:rotate(180deg); 	/* Opera */
+	}
+
+	.buy-cart-num{
+		position: absolute;
+		top: 0;
+		right: 0;
+		border: 1px solid #ff0011;
+		border-radius: 50%;
+		background: #ff0011;
+		padding: 5px 6px;
+		z-index: 1;
+	}
+	.buy-cart-num span{
+		color: #fff2e2;
+	}
+	.fui-modal{
+		position: fixed!important;
+		width: 50%!important;
+		left: 380px!important;
+		bottom: 100px!important;
+	}
+	.fui-modal .picker-modal{
+		width: 50%!important;
+		left: 380px!important;
+		bottom: 100px!important;
+	}
+	.option-picker{
+		height: 400px !important;
+	}
+	.option-picker-options{
+		height: 330px !important;
+	}
+
+</style>
+<div class="nch-container wrapper">
+	<div class="left">
+		<div class="nch-module nch-module-style03">
+			<div class="title">
+				<h3>最近浏览</h3>
+			</div>
+			<div class="content">
+				<div class="nch-sidebar-viewed ps-container" id="nchSidebarViewed">
+					<ul>
+						{loop $hlist $row}
+						<li class="nch-sidebar-bowers">
+							<div class="goods-pic"><a href="{php echo mobileUrl('pc.goods.detail',array('id'=>$row['goodsid']))}" target="_blank">
+								<img src="{php echo tomedia($row['thumb']);}" data-url="{php echo tomedia($row['thumb']);}" title="{$row['title']}" alt="{$row['title']}" style="display: inline;"></a></div>
+							<dl>
+								<dt><a style="color:#333;" href="{php echo mobileUrl('pc.goods.detail',array('id'=>$row['goodsid']))}" target="_blank">{$row['title']}</a></dt>
+								<dd>¥{$row['marketprice']}</dd>
+							</dl>
+						</li>
+						{/loop}
+					</ul>
+					<!--<div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px; width: 206px; display: none;">
+						<div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div>
+					</div>
+					<div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px; height: 309px; display: inherit;">
+						<div class="ps-scrollbar-y" style="top: 0px; height: 192px;"></div>
+					</div>-->
+				</div>
+				<a href="{php echo mobileUrl('pc.member.history')}" class="nch-sidebar-all-viewed">全部浏览历史</a></div>
+		</div>
+	</div>
+
+
+
+	<div class="right">
+		<div id="gc_goods_recommend_div" style="width:980px;"></div>
+		<div class="shop_con_list" id="main-nav-holder">
+			<nav class="sort-bar" id="main-nav">
+
+
+				<div class="nch-sortbar-array"> 排序方式：
+					<ul>
+						<li id="good_default" class="selected"><a href="{php echo mobileUrl('pc.goods',array('keywords'=>$keys,'order'=>'','by'=>'','activity'=>$_GPC['activity']))}" title="默认排序">默认</a></li>
+						<li id="goood_sale">
+							{php $by = $_GPC['by'];}
+							<?php if($by==''){$by='desc';}elseif($by=='desc'){$by='asc';}else{$by='desc';}?>
+
+							<a href="{php echo mobileUrl('pc.goods',array('keywords'=>$keys,'order'=>'salesreal','by'=>$by,'isnew'=>$_GPC['isnew'],'ishot'=>$_GPC['ishot'],'isrecommand'=>$_GPC['isrecommand'],'isdiscount'=>$_GPC['isdiscount'],'activity'=>$_GPC['activity']))}" title="{if $by=='desc'}点击按销量从高到低排序{else}点击按销量从低到高排序{/if}">
+								销量
+								<i class="{if $by=='asc'}trote{/if}"></i>
+							</a>
+						</li>
+
+						<li id="goood_price">
+							<a href="{php echo mobileUrl('pc.goods',array('keywords'=>$keys,'order'=>'marketprice','by'=>$by,'isnew'=>$_GPC['isnew'],'ishot'=>$_GPC['ishot'],'isrecommand'=>$_GPC['isrecommand'],'isdiscount'=>$_GPC['isdiscount'],'activity'=>$_GPC['activity']))}" title="{if $by=='desc'}点击按价格从高到低排序{else}点击按价格从低到高排序{/if}">
+								价格
+								<i class="{if $by=='asc'}trote{/if}"></i>
+							</a>
+						</li>
+						<li>
+							<div>
+								<input id="priceMin" title="最低价" value="{$_GPC['priceMin']}" maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" class="input-txt"><em>-</em>
+								<input id="priceMax" title="最高价" value="{$_GPC['priceMax']}" maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" class="input-txt">
+								<a id="priceBtn" class="priceBtn">确定</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div id="isnew_box" class="nch-sortbar-owner">
+					<span>
+						<a href="{php echo mobileUrl('pc.goods',array('keywords'=>$keys,'isnew'=>1,'order'=>$_GPC['order'],'by'=>$_GPC['by'],'activity'=>$_GPC['activity']))}"><i></i>新品上市</a>
+					</span>
+				</div>
+				<div id="ishot_box" class="nch-sortbar-owner">
+					<span>
+						<a href="{php echo mobileUrl('pc.goods',array('keywords'=>$keys,'ishot'=>1,'order'=>$_GPC['order'],'by'=>$_GPC['by'],'activity'=>$_GPC['activity']))}"><i></i>热卖商品</a>
+					</span>
+				</div>
+				<div id="isrecommand_box" class="nch-sortbar-owner">
+					<span>
+						<a href="{php echo mobileUrl('pc.goods',array('keywords'=>$keys,'isrecommand'=>1,'order'=>$_GPC['order'],'by'=>$_GPC['by'],'activity'=>$_GPC['activity']))}"><i></i>推荐商品</a>
+					</span>
+				</div>
+				<div id="isdiscount_box" class="nch-sortbar-owner">
+					<span>
+						<a href="{php echo mobileUrl('pc.goods',array('keywords'=>$keys,'isdiscount'=>1,'order'=>$_GPC['order'],'by'=>$_GPC['by'],'activity'=>$_GPC['activity']))}"><i></i>促销商品</a>
+					</span>
+				</div>
+				<script>
+					var order = "{$_GPC['order']}";
+					var ishot = "{$_GPC['ishot']}";
+					var isrecommand = "{$_GPC['isrecommand']}";
+					var isdiscount = "{$_GPC['isdiscount']}";
+					var isnew = "{$_GPC['isnew']}";
+
+					if(order == 'salesreal'){
+						$('#isnew_box').attr('style','');
+						$('#isnew_box span a').attr('style','');
+						$('#ishot_box').attr('style','');
+						$('#ishot_box span a').attr('style','');
+						$('#isrecommand_box').attr('style','');
+						$('#isrecommand_box span a').attr('style','');
+						$('#isdiscount_box').attr('style','');
+						$('#isdiscount_box span a').attr('style','');
+						
+						$('#good_default').removeClass('selected');
+						$('#goood_price').removeClass('selected');
+						$('#goood_sale').addClass('selected');
+
+					}
+					if(order == 'marketprice'){
+						$('#isnew_box').attr('style','');
+						$('#isnew_box span a').attr('style','');
+						$('#ishot_box').attr('style','');
+						$('#ishot_box span a').attr('style','');
+						$('#isrecommand_box').attr('style','');
+						$('#isrecommand_box span a').attr('style','');
+						$('#isdiscount_box').attr('style','');
+						$('#isdiscount_box span a').attr('style','');
+						$('#good_default').removeClass('selected');
+						$('#goood_sale').removeClass('selected');
+						$('#goood_price').addClass('selected');
+					}
+					if(isnew == 1){
+						// $('#goood_price').removeClass('selected');
+						$('#ishot_box').attr('style','');
+						$('#ishot_box span a').attr('style','');
+						$('#isrecommand_box').attr('style','');
+						$('#isrecommand_box span a').attr('style','');
+						$('#isdiscount_box').attr('style','');
+						$('#isdiscount_box span a').attr('style','');
+						// $('#good_default').removeClass('selected');
+						// $('#goood_sale').removeClass('selected');
+						$('#isnew_box').attr('style','background-color:#fff;color:#F87622;');
+						$('#isnew_box span a').attr('style','color:#F87622;');
+					}
+					if(ishot == 1){
+						// $('#goood_price').removeClass('selected');
+						$('#isnew_box').attr('style','');
+						$('#isnew_box span a').attr('style','');
+						$('#isrecommand_box').attr('style','');
+						$('#isrecommand_box span a').attr('style','');
+						$('#isdiscount_box').attr('style','');
+						$('#isdiscount_box span a').attr('style','');
+						// $('#good_default').removeClass('selected');
+						// $('#goood_sale').removeClass('selected');
+						$('#ishot_box').attr('style','background-color:#fff;color:#F87622;');
+						$('#ishot_box span a').attr('style','color:#F87622;');
+					}
+					if(isrecommand == 1){
+						// $('#goood_price').removeClass('selected');
+						$('#isnew_box').attr('style','');
+						$('#isnew_box span a').attr('style','');
+						$('#isdiscount_box').attr('style','');
+						$('#isdiscount_box span a').attr('style','');
+						// $('#good_default').removeClass('selected');
+						// $('#goood_sale').removeClass('selected');
+						$('#ishot_box').attr('style','');
+						$('#ishot_box span a').attr('style','');
+						$('#isrecommand_box').attr('style','background-color:#fff;color:#F87622;');
+						$('#isrecommand_box span a').attr('style','color:#F87622;');
+					}
+					if(isdiscount == 1){
+						// $('#goood_price').removeClass('selected');
+						$('#isnew_box').attr('style','');
+						$('#isnew_box span a').attr('style','');
+						$('#isrecommand_box').attr('style','');
+						$('#isrecommand_box span a').attr('style','');
+						// $('#good_default').removeClass('selected');
+						// $('#goood_sale').removeClass('selected');
+						$('#ishot_box').attr('style','');
+						$('#ishot_box span a').attr('style','');
+						$('#isdiscount_box').attr('style','background-color:#fff;color:#F87622;');
+						$('#isdiscount_box span a').attr('style','color:#F87622;');
+					}
+					
+					$('#priceBtn').bind('click',function(){
+						var priceMin = $('#priceMin').val();
+						var priceMax = $('#priceMax').val();
+						var url = "{php echo mobileUrl('pc.goods',array('keywords'=>$keys))}"+"&priceMin="+priceMin+"&priceMax="+priceMax;
+						window.location.href=url;
+					});
+				</script>
+				
+				
+			</nav>
+			<!-- 商品列表循环  -->
+
+			<div>
+				<style type="text/css">
+					#box {
+						background: #FFF;
+						width: 238px;
+						height: 410px;
+						margin: -390px 0 0 0;
+						display: block;
+						border: solid 4px #D93600;
+						position: absolute;
+						z-index: 999;
+						opacity: .5
+					}
+					.shopMenu {
+						position: fixed;
+						z-index: 1;
+						right: 25%;
+						top: 0;
+					}
+					.shouqin{
+						display: inline;
+						position: absolute;
+						top: 0;
+						left: 0;
+						right: 0;
+						bottom: 0;
+						z-index: 1;
+						background-size: cover;
+						background-position: center;
+					}
+				</style>
+				<div class="squares" nc_type="current_display_mode">
+					<input type="hidden" id="lockcompare" value="unlock">
+					<ul class="list_pic">
+						{loop $glist $row}
+						<li class="item">
+							<div class="goods-content" nctype_goods=" 52" nctype_store="1">
+								<div class="goods-pic" style="position: relative;">
+									<a href="{php echo mobileUrl('pc.goods.detail',array('id'=>$row['id']))}"  title="{$row['title']}">
+										<img src="{php echo tomedia($row['thumb']);}" data-url="{php echo tomedia($row['thumb']);}" title="{$row['title']}" alt="{$row['title']}" style="display: inline;">
+										{if $row['total']<=0}
+										<img class="shouqin" src="{php echo '../addons/ewei_shopv2/static/images/shouqin.png'}" >
+										{/if}
+									</a>
+								</div>
+								<!--<div class="goods-promotion"><span>限时折扣</span></div>-->
+								<div class="goods-info" style="top: 180px;">
+									
+									<div class="goods-name" style="height:18px;"><a href="{php echo mobileUrl('pc.goods.detail',array('id'=>$row['id']))}"  title="{$row['title']}">{$row['title']}<em></em></a></div>
+									<div class="goods-price" style="height:40px;">
+
+										<em class="sale-price" title="商城价：¥{$row['marketprice']}">¥{$row['marketprice']}</em>
+										{if $row['productprice']>0}
+										<em class="market-price" title="市场价：¥{$row['productprice']}">¥{$row['productprice']}</em>
+										{/if}<br/>
+										{if $row['timestart'] > 0  && $row['timeend'] > $time}
+										<p style="font-size:10px;">抢购时间：{$row['timestart1']}--{$row['timeend1']}</p>
+
+										{/if}
+										<span class="raty" data-score="5" title="很满意" style="width: 80px;">
+										<!-- <img src="/data/resource/js/jquery.raty/img/star-on.png" alt="1" title="很满意">&nbsp;
+										<img src="/data/resource/js/jquery.raty/img/star-on.png" alt="2" title="很满意">&nbsp;
+										<img src="/data/resource/js/jquery.raty/img/star-on.png" alt="3" title="很满意">&nbsp;
+										<img src="/data/resource/js/jquery.raty/img/star-on.png" alt="4" title="很满意">&nbsp;
+										<img src="/data/resource/js/jquery.raty/img/star-on.png" alt="5" title="很满意"> -->
+										<input type="hidden" name="score" value="5" readonly="readonly">
+										</span>
+									</div>
+									
+									<div class="sell-stat">
+										<ul>
+											<li>
+												<!--<a href="{php echo mobileUrl('pc.goods.detail',array('id'=>$row['id']))}#ncGoodsRate"  class="status">{$row['salesreal']}</a>-->
+												<!--<p>商品销量</p>-->
+											</li>
+											
+											<!--<li><em member_id="1">&nbsp;</em></li>-->
+											<li style="width: 60%;text-align: right;">
+												<a style="opacity: 0" href="javascript:;" class="status">0</a>
+												<p>
+													<span goodsid="{$row['id']}" class="buy" style="cursor: pointer;border: 1px solid #f00;background: #f00;color: #fff;padding: 3px;">购买</span>
+												</p>
+											</li>
+										</ul>
+									</div>
+									
+									
+								</div>
+
+								<!--购物车数量-->
+								
+								{if $row['total1'] >0 && $row['total1'] <100}
+								<div class="buy-cart-num">
+									<span>{$row['total1']}</span>
+								</div>
+								{elseif $row['total1'] >99}
+								<div class="buy-cart-num">
+									<span>99+</span>
+								</div>
+								{/if}
+
+							</div>
+						</li>
+
+						{/loop}
+
+						<div class="clear"></div>
+					</ul>
+				</div>
+				{if empty($glist)}
+				<div>
+					<div class='content-empty'>
+
+						<i style="font-size: 100px" class='icon icon-searchlist'></i>
+						<br/>
+						<span style="font-size: 16px">暂时没有任何商品</span>
+
+					</div>
+				</div>
+				{/if}
+
+			</div>
+			<div class="tc mt20 mb20">
+				<!--<div class="pagination"> <ul><li><span>首页</span></li><li><span>上一页</span></li><li><span class="currentpage">1</span></li><li><span>下一页</span></li><li><span>末页</span></li></ul> </div>-->
+				{$pager}
+			</div>
+		</div>
+
+		<!-- 猜你喜欢 -->
+		<div id="guesslike_div" style="width:980px;"></div>
+	</div>
+</div>
+
+{template 'goods/picker'}
+
+{template 'goods/wholesalePicker'}
+
+<script type="text/javascript">
+	$('#add_cart').bind('click',function(){
+
+	});
+
+	require(['/addons/ewei_shopv2/plugin/pc/biz/goods/list.js'], function (modal) {
+
+		modal.init({
+
+			page: "{$_GPC['page']}",
+
+			keywords: "{$_GPC['keywords']}",
+
+			isrecommand: "{$_GPC['isrecommand']}",
+
+			ishot: "{$_GPC['ishot']}",
+
+			isnew: "{$_GPC['isnew']}",
+
+			isdiscount: "{$_GPC['isdiscount']}",
+
+			issendfree: "{$_GPC['issendfree']}",
+
+			istime: "{$_GPC['istime']}",
+
+			cate: "{$_GPC['cate']}",
+
+			order: "{$_GPC['order']}",
+
+			by: "{$_GPC['by']}",
+
+			merchid: "{$_GPC['merchid']}",
+
+			frommyshop: "{php echo intval($_GPC['frommyshop'])}"
+
+		});
+
+	});
+
+</script>
+{template 'pc/layout/_footer'}

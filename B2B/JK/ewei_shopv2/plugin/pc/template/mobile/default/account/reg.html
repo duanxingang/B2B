@@ -1,0 +1,1052 @@
+<html lang="zh"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{if empty($this->merch_user)}{$_W['shopset']['shop']['name']}{else}{php echo $this->merch_user['merchname']}{/if}</title>
+    <style type="text/css">
+        body {
+
+            _behavior: url(/addons/ewei_shopv2/plugin/pc/template/web/static/css/csshover.htc);
+
+        }
+    </style>
+    <link href="/addons/ewei_shopv2/plugin/pc/template/web/static/css/base.css" rel="stylesheet" type="text/css">
+    <link href="/addons/ewei_shopv2/plugin/pc/template/web/static/css/home_header.css" rel="stylesheet" type="text/css">
+    <link href="/addons/ewei_shopv2/plugin/pc/template/web/static/css/member_login.css" rel="stylesheet" type="text/css">
+    <link href="/addons/ewei_shopv2/plugin/pc/template/web/static/font/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/addons/ewei_shopv2/plugin/pc/template/mobile/default/static/css/foxui.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="/addons/ewei_shopv2/plugin/pc/template/web/static/font/font-awesome/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/addons/ewei_shopv2/plugin/pc/template/web/static/js/html5shiv.js"></script>
+    <script src="/addons/ewei_shopv2/plugin/pc/template/web/static/js/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        var COOKIE_PRE = 'COOKIE_PRE';
+        var _CHARSET = 'utf-8';
+        var SITEURL = '/web/web.php?i=1';
+        var SHOP_SITE_URL = '/web/web.php?i=1';
+        var RESOURCE_SITE_URL = '/addons/ewei_shopv2/plugin/pc/template/web/static';
+        var RESOURCE_SITE_URL = '/addons/ewei_shopv2/plugin/pc/template/web/static';
+        var SHOP_TEMPLATES_URL = '/addons/ewei_shopv2/plugin/pc/template/web/static';
+    </script>
+    <script src="/addons/ewei_shopv2/plugin/pc/template/web/static/js/jquery.js"></script>
+    <script src="/addons/ewei_shopv2/plugin/pc/template/web/static/js/jquery-ui/jquery.ui.js"></script>
+    <script src="/addons/ewei_shopv2/plugin/pc/template/web/static/js/common.js"></script>
+    <script src="/addons/ewei_shopv2/plugin/pc/template/web/static/js/jquery.validation.min.js"></script>
+    <script src="{php echo EWEI_SHOPV2_LOCAL}static/js/require.js"></script>
+    <script src="{php echo EWEI_SHOPV2_LOCAL}static/js/myconfig-app.js"></script>
+    <script language="javascript">require(['core'], function (modal){modal.init({siteUrl: "{$_W['siteroot']}",baseUrl: "{php echo mobileUrl('ROUTES')}"})});</script>
+    <link rel="stylesheet" type="text/css" href="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/css/layui.css?v=0.2">
+    <script src="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/layui.js"></script>
+    <style>
+        .public-head-layout .nc-regist-now {
+            margin-top: 20px;
+        }
+        .container{
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        .container-box{
+            width: 65%;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        .container-box .left{
+            float: left;
+            width: 60%;
+            padding: 10px 35px 10px 50px;
+            border-right: 1px solid #ccc;
+        }
+        .container-box .right{
+            float: left;
+            width: 20%;
+            padding: 10px 35px;
+        }
+        .tabs-nav{
+            margin-bottom: 25px;
+        }
+        .layui-btn{
+            background-color: #F87622;
+        }
+        .right h4 {
+            font-size: 14px;
+            line-height: 20px;
+            height: 20px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .right .reister-after li {
+            color: #999;
+            line-height: 24px;
+            margin-bottom: 10px;
+            padding-left: 12px;
+        }
+        #invoice_type{
+            width: 100%;
+            height: 38px;
+            border-color: #ddd;
+        }
+        #imgFile0{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+        #imgFile01{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+        #bill_imgFile{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+        #buyer_imgFile{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+        #buyerid_imgFile{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+        #arrive_imgFile{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+        #arriveid_imgFile{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+        #gsp_imgFile{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+        #quality_imgFile{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+        #food_imgFile{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+        #appliance_imgFile{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+
+        #report_imgFile{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+
+        .fui-picker{
+            position: fixed;
+            bottom: 0;
+            width: 45%;
+            left: 300px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header-wrap">
+    <header class="public-head-layout wrapper">
+        <h1 class="site-logo"><a href="{php echo mobileUrl('pc')}"><img src="{php echo tomedia($_W['shopset']['shop']['pc_logo'])}" class="pngFix"></a></h1>
+        <div class="nc-regist-now">
+            <span class="avatar">
+                <img src="/addons/ewei_shopv2/plugin/pc/template/web/static/images/default_user_portrait.gif">
+            </span>
+            <span>Hi，欢迎来<br>还不是本站会员？立即
+                <a title="" href="{php echo mobileUrl('pc.account.login')}" class="register">登陆</a>
+            </span>
+        </div>
+    </header>
+</div>
+
+<div class="container">
+    <div class="container-box">
+        <div class="left">
+            <ul class="tabs-nav">
+                <li>
+                    <a href="javascript:;" class="tabulous_active">填写企业信息<i></i></a>
+                </li>
+            </ul>
+            <!--<form class="layui-form">-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">企业名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="company" required  lay-verify="required" placeholder="请输入企业名称" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">联系人</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="contact_name" required  lay-verify="required" placeholder="请输入联系人姓名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">手机号码</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="contact_phone" required  lay-verify="required" placeholder="请输入联系人手机号码" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">企业地址</label>
+                    <div class="layui-input-block">
+                        <!--<input type="text" name="company_address" required  lay-verify="required" placeholder="请输入企业地址" autocomplete="off" class="layui-input">-->
+                        <input type="text" id='areas'  name='areas' data-value="{if !empty($show_data) && !empty($address)}{$address['datavalue']}{/if}" value="" placeholder="所在地区"  class="fui-input layui-input" readonly=""/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">详细地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="company_areas" required  lay-verify="required" placeholder="请输入详细地址" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">发票类型</label>
+                    <div class="layui-input-block">
+                        <select lay-ignore id="invoice_type" name='invoice_type' class='form-control'>
+                            <option value="1">电子发票</option>
+                            <!--<option value="0">普通发票</option>-->
+                            <!--<option value="2">专用发票</option>-->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">开票资料</label>
+                    <div class="layui-input-block">
+                        <div style="width: 35%;height: 60px" class="layui-upload-drag" id="test17">
+                            <input type="file" name='imgFile' id='bill_imgFile' multiple="" accept="image/*" >
+                            <i class="layui-icon"></i>
+                            <img style="display: none;width: 100%;height: 100%" src="" />
+                        </div>
+                        <input type="hidden" id="file_images7" value="">
+                        <p>点击上传图片</p>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">药品许可证</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="yao_card" required  lay-verify="required" placeholder="请输入药品许可证" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">药品许可证有效期</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="test1" name="yao_card_time" required  lay-verify="required" placeholder="请输入药品许可证有效期" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">GSP证书编号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="gsp_card" required  lay-verify="required" placeholder="请输入GSP证书编号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">GSP证书有效期</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="test2" name="gsp_card_time" required  lay-verify="required" placeholder="请输入GSP证书有效期" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">GSP证书</label>
+                    <div class="layui-input-block">
+                        <div style="width: 35%;height: 60px" class="layui-upload-drag" id="test16">
+                            <input type="file" name='imgFile' id='gsp_imgFile' multiple="" accept="image/*" >
+                            <i class="layui-icon"></i>
+                            <img style="display: none;width: 100%;height: 100%" src="" />
+                        </div>
+                        <input type="hidden" id="file_images8" value="">
+                        <p>点击上传图片</p>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">营业执照号码</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="business_card" required  lay-verify="required" placeholder="请输入营业执照号码" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">营业执照图片</label>
+                    <div class="layui-input-block">
+                        <div style="width: 35%;height: 60px" class="layui-upload-drag" id="test10">
+                            <input type="file" name='imgFile' id='imgFile0' multiple="" accept="image/*" >
+                            <i class="layui-icon"></i>
+                            <img style="display: none;width: 100%;height: 100%" src="" />
+                        </div>
+                        <input type="hidden" id="file_images" value="">
+                        <p>点击上传图片</p>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">药品许可证图片</label>
+                    <div class="layui-input-block">
+                        <div style="width: 35%;height: 60px" class="layui-upload-drag" id="test11">
+                            <input type="file" name='imgFile' id='imgFile01' multiple="" accept="image/*" >
+                            <i class="layui-icon"></i>
+                            <img style="display: none;width: 100%;height: 100%" src="" />
+                        </div>
+                        <input type="hidden" id="file_images1" value="">
+                        <p>点击上传图片</p>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">质量保证协议</label>
+                    <div class="layui-input-block">
+                        <div style="width: 35%;height: 60px" class="layui-upload-drag" id="test18">
+                            <input type="file" name='imgFile' id='quality_imgFile' multiple="" accept="image/*" >
+                            <i class="layui-icon"></i>
+                            <img style="display: none;width: 100%;height: 100%" src="" />
+                        </div>
+                        <input type="hidden" id="file_images2" value="">
+                        <p>点击上传图片</p>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">年度报告</label>
+                    <div class="layui-input-block">
+                        <div style="width: 35%;height: 60px" class="layui-upload-drag" id="test25">
+                            <input type="file" name='imgFile' id='report_imgFile' multiple="" accept="image/*" >
+                            <i class="layui-icon"></i>
+                            <img style="display: none;width: 100%;height: 100%" src="" />
+                        </div>
+                        <input type="hidden" id="file_images11" value="">
+                        <p>点击上传图片</p>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">采购员委托书</label>
+                    <div class="layui-input-block">
+                        <div style="width: 35%;height: 60px" class="layui-upload-drag" id="test19">
+                            <input type="file" name='imgFile' id='buyer_imgFile' multiple="" accept="image/*" >
+                            <i class="layui-icon"></i>
+                            <img style="display: none;width: 100%;height: 100%" src="" />
+                        </div>
+                        <input type="hidden" id="file_images3" value="">
+                        <p>点击上传图片</p>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">采购员身份证</label>
+                    <div class="layui-input-block">
+                        <div style="width: 35%;height: 60px" class="layui-upload-drag" id="test20">
+                            <input type="file" name='imgFile' id='buyerid_imgFile' multiple="" accept="image/*" >
+                            <i class="layui-icon"></i>
+                            <img style="display: none;width: 100%;height: 100%" src="" />
+                        </div>
+                        <input type="hidden" id="file_images4" value="">
+                        <p>点击上传图片</p>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">收货委托书(选填)</label>
+                    <div class="layui-input-block">
+                        <div style="width: 35%;height: 60px" class="layui-upload-drag" id="test21">
+                            <input type="file" name='imgFile' id='arrive_imgFile' multiple="" accept="image/*" >
+                            <i class="layui-icon"></i>
+                            <img style="display: none;width: 100%;height: 100%" src="" />
+                        </div>
+                        <input type="hidden" id="file_images5" value="">
+                        <p>点击上传图片</p>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">收货委托人身份证</label>
+                    <div class="layui-input-block">
+                        <div style="width: 35%;height: 60px" class="layui-upload-drag" id="test22">
+                            <input type="file" name='imgFile' id='arriveid_imgFile' multiple="" accept="image/*" >
+                            <i class="layui-icon"></i>
+                            <img style="display: none;width: 100%;height: 100%" src="" />
+                        </div>
+                        <input type="hidden" id="file_images6" value="">
+                        <p>点击上传图片</p>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">食品资格证(选填)</label>
+                    <div class="layui-input-block">
+                        <div style="width: 35%;height: 60px" class="layui-upload-drag" id="test23">
+                            <input type="file" name='imgFile' id='food_imgFile' multiple="" accept="image/*" >
+                            <i class="layui-icon"></i>
+                            <img style="display: none;width: 100%;height: 100%" src="" />
+                        </div>
+                        <input type="hidden" id="file_images9" value="">
+                        <p>点击上传图片</p>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">医疗器械资格证(选填)</label>
+                    <div class="layui-input-block">
+                        <div style="width: 35%;height: 60px" class="layui-upload-drag" id="test24">
+                            <input type="file" name='imgFile' id='appliance_imgFile' multiple="" accept="image/*" >
+                            <i class="layui-icon"></i>
+                            <img style="display: none;width: 100%;height: 100%" src="" />
+                        </div>
+                        <input type="hidden" id="file_images10" value="">
+                        <p>点击上传图片</p>
+                    </div>
+                </div>
+
+                
+
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="hidden" id="app_uid" value="{$app_uid}">
+                        <button class="layui-btn btn-submit" lay-submit lay-filter="formDemo">确认提交</button>
+                    </div>
+                </div>
+            <!--</form>-->
+        </div>
+        <div class="right">
+            <div class="reister-after">
+                <h4>注册之后您可以</h4>
+                <ol>
+                    <li class="ico01"><i></i>购买商品支付订单</li>
+                    <li class="ico02"><i></i>收藏商品关注店铺</li>
+                    <li class="ico03"><i></i>安全交易诚信无忧</li>
+                    <li class="ico04"><i></i>积分获取优惠购物</li>
+                    <li class="ico05"><i></i>会员等级享受特权</li>
+                    <li class="ico06"><i></i>评价晒单站外分享</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /*#footer{position:fixed;bottom:0px;}*/
+</style>
+<div style="margin-top: 30px" id="footer" class="wrapper">
+
+    <p>{php echo get_menus(1)}</p>
+
+    <br/>
+
+    {php show_copyright()}
+
+</div>
+<script language='javascript' type="text/javascript">
+
+    // require(['biz/member/address'], function (modal) {
+    //     modal.initPost({new_area: {php echo $new_area}, address_street: {php echo $address_street}});
+    // });
+
+    function inPost(params) {
+        var reqParams = ['foxui.picker'];
+        if (params.new_area) {
+            reqParams = ['foxui.picker', 'foxui.citydatanew']
+        }
+
+        require(reqParams, function () {
+            $('#areas').cityPicker({
+                title: '请选择所在城市',
+                new_area: params.new_area,
+                address_street: params.address_street,
+                onClose: function (self) {
+                    var datavalue = $('#areas').attr('data-value');
+                    var codes = datavalue.split(' ');
+                    if (params.new_area && params.address_street) {
+                        var city_code = codes[1];
+                        var area_code = codes[2];
+                        city_code = city_code + '';
+                        area_code = area_code + '';
+                        var data = loadStreetData(city_code, area_code);
+                        var street = $('<input type="text" id="street"  name="street" data-value="" value="" placeholder="所在街道"  class="fui-input" readonly=""/>');
+                        var parents = $('#street').closest('.fui-cell-info');
+                        $('#street').remove();
+                        parents.append(street);
+                        street.cityPicker({title: '请选择所在街道', street: 1, data: data})
+                    }
+                }
+
+            });
+            if (params.new_area && params.address_street) {
+                var datavalue = $('#areas').attr('data-value');
+                if (datavalue) {
+                    var codes = datavalue.split(' ');
+                    var city_code = codes[1];
+                    var area_code = codes[2];
+                    var data = loadStreetData(city_code, area_code);
+                    $('#street').cityPicker({title: '请选择所在街道', street: 1, data: data})
+                }
+            }
+        });
+    }
+    inPost({new_area: {php echo $new_area}, address_street: {php echo $address_street}});
+
+</script>
+<!--<script language='javascript'>require(['biz/member/address'], function (modal) {-->
+    <!--modal.initList();-->
+<!--});</script>-->
+<script language='javascript'>
+    layui.use(['laydate','upload','layer','form'], function(){
+        var laydate = layui.laydate;
+        var upload = layui.upload;
+        var layer = layui.layer;
+        var form = layui.form;
+        //选择日期
+        //常规用法
+        laydate.render({
+            elem: '#test1'
+        });
+        laydate.render({
+            elem: '#test2'
+        });
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#imgFile0' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test10 i").hide();
+                    $("#test10 img").attr('src',res.url);
+                    $("#test10 img").show();
+                    $("#file_images").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+        //执行实例
+        var uploadInst1 = upload.render({
+            elem: '#imgFile01' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test11 i").hide();
+                    $("#test11 img").attr('src',res.url);
+                    $("#test11 img").show();
+                    $("#file_images1").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst2 = upload.render({
+            elem: '#bill_imgFile' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test17 i").hide();
+                    $("#test17 img").attr('src',res.url);
+                    $("#test17 img").show();
+                    $("#file_images7").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst3 = upload.render({
+            elem: '#quality_imgFile' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test18 i").hide();
+                    $("#test18 img").attr('src',res.url);
+                    $("#test18 img").show();
+                    $("#file_images2").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst4 = upload.render({
+            elem: '#buyer_imgFile' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test19 i").hide();
+                    $("#test19 img").attr('src',res.url);
+                    $("#test19 img").show();
+                    $("#file_images3").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst5 = upload.render({
+            elem: '#buyerid_imgFile' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test20 i").hide();
+                    $("#test20 img").attr('src',res.url);
+                    $("#test20 img").show();
+                    $("#file_images4").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst6 = upload.render({
+            elem: '#arrive_imgFile' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test21 i").hide();
+                    $("#test21 img").attr('src',res.url);
+                    $("#test21 img").show();
+                    $("#file_images5").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst7 = upload.render({
+            elem: '#arriveid_imgFile' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test22 i").hide();
+                    $("#test22 img").attr('src',res.url);
+                    $("#test22 img").show();
+                    $("#file_images6").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst8 = upload.render({
+            elem: '#gsp_imgFile' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test16 i").hide();
+                    $("#test16 img").attr('src',res.url);
+                    $("#test16 img").show();
+                    $("#file_images8").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst9 = upload.render({
+            elem: '#food_imgFile' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test23 i").hide();
+                    $("#test23 img").attr('src',res.url);
+                    $("#test23 img").show();
+                    $("#file_images9").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst10 = upload.render({
+            elem: '#appliance_imgFile' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test24 i").hide();
+                    $("#test24 img").attr('src',res.url);
+                    $("#test24 img").show();
+                    $("#file_images10").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst11 = upload.render({
+            elem: '#report_imgFile' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test25 i").hide();
+                    $("#test25 img").attr('src',res.url);
+                    $("#test25 img").show();
+                    $("#file_images11").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        
+
+        //监听提交
+        $(".btn-submit").on('click',function (){
+
+            var company = $("input[name='company']").val();
+            var contact_name = $("input[name='contact_name']").val();
+            var contact_phone = $("input[name='contact_phone']").val();
+            // var company_address = $("input[name='areas']").val();
+            var company_areas = $("input[name='company_areas']").val();
+            var invoice_type = $('#invoice_type').val();
+            var yao_card = $("input[name='yao_card']").val();
+            var yao_card_time = $("input[name='yao_card_time']").val();
+            var gsp_card = $("input[name='gsp_card']").val();
+            var gsp_card_time = $("input[name='gsp_card_time']").val();
+            var business_card = $("input[name='business_card']").val();
+            var business_img = $("#file_images").val();
+            var yao_card_img = $("#file_images1").val();
+            var app_uid = $('#app_uid').val();
+            var company_address = $('#areas').val();
+            
+            var quality_img = $("#file_images2").val();
+            var buyer_img = $("#file_images3").val();
+            var buyerid_img = $("#file_images4").val();
+            var arrive_img = $("#file_images5").val();
+            var arriveid_img = $("#file_images6").val();
+            var bill_img = $("#file_images7").val();
+            var gsp_img = $("#file_images8").val();
+            var food_img = $("#file_images9").val();
+            var appliance_img = $("#file_images10").val();
+            var report_img = $("#file_images11").val();
+            //判断
+            if(company == ''){
+                alert('请输入企业名称');
+                return false;
+            }
+
+            if(contact_name == ''){
+                alert('请输入姓名');
+                return false;
+            } 
+            var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0-9]{1})|(15[0-3]{1})|(15[4-9]{1})|(18[0-9]{1})|(199))+\d{8})$/;
+            if(contact_phone == ''){
+                alert('请输入手机号码');
+                return false;
+            } else if (contact_phone.length != 11) {
+                alert('请输入11位手机号码');
+                return false;
+            } else if (!myreg.test(contact_phone)) {
+                alert('请输入有效的手机号码');
+                return false;
+            }
+            if(company_address == ''){
+                alert('请输入企业地址');
+                return false;
+            }
+            if(company_areas == ''){
+                alert('请输入详细地址');
+                return false;
+            }
+            if(invoice_type == ''){
+                alert('请选择发票类型');
+                return false;
+            }
+            if(yao_card == ''){
+                alert('请输入药品许可证');
+                return false;
+            }
+            if(yao_card_time == ''){
+                alert('请输入药品许可证有效期');
+                return false;
+            }
+            if(gsp_card == ''){
+                alert('请输入GSP证书');
+                return false;
+            }
+            if(gsp_card_time == ''){
+                alert('请输入GSP证书有效期');
+                return false;
+            }
+            if(business_card == ''){
+                alert('请输入营业执照号码');
+                return false;
+            }
+            if(business_img == '' || business_img == undefined){
+                alert('请上传营业执照图片');
+                return false;
+            }
+            if(yao_card_img == '' || yao_card_img == undefined){
+                alert('请上传药品许可证图片');
+                return false;
+            }
+
+            if(quality_img == '' || quality_img == undefined){
+                alert('请上传质量保证协议图片');
+                return false;
+            }
+            if(buyer_img == '' || buyer_img == undefined){
+                alert('请上传采购委托书图片');
+                return false;
+            }
+            if(buyerid_img == '' || buyerid_img == undefined){
+                alert('请上传采购委托人身份证图片');
+                return false;
+            }
+            if(report_img == '' || report_img == undefined){
+                alert('请上传年度报告图片');
+                return false;
+            }
+            if(arriveid_img == '' || arriveid_img == undefined){
+                alert('请上传收货委托人身份证图片');
+                return false;
+            }
+            if(bill_img == '' || bill_img == undefined){
+               alert('请上传发票资料图片');
+                return false;
+            }
+            if(gsp_img == '' || gsp_img == undefined){
+                alert('请上传GSP证书图片');
+                return false;
+            }
+
+            $.ajax({
+                url:"{php echo mobileUrl('member/company/add')}",
+                data:{
+                    "company":company,
+                    "contact_name":contact_name,
+                    "contact_phone":contact_phone,
+                    "company_address":company_address,
+                    "company_areas":company_areas,
+                    "invoice_type":invoice_type,
+                    "yao_card":yao_card,
+                    "yao_card_time":yao_card_time,
+                    "gsp_card":gsp_card,
+                    "gsp_card_time":gsp_card_time,
+                    "business_card":business_card,
+                    "business_img":business_img==undefined ? '' : business_img,
+                    "yao_card_img":yao_card_img==undefined ? '' : yao_card_img,
+                    "quality_img":quality_img==undefined ? '' : quality_img,
+                    "buyer_img":buyer_img==undefined ? '' : buyer_img,
+                    "buyerid_img":buyerid_img==undefined ? '' : buyerid_img,
+                    "arrive_img":arrive_img==undefined ? '' : arrive_img,
+                    "arriveid_img":arriveid_img==undefined ? '' : arriveid_img,
+                    "bill_img":bill_img==undefined ? '' : bill_img,
+                    "gsp_img":gsp_img==undefined ? '' : gsp_img,
+                    "food_img":food_img==undefined ? '' : food_img,
+                    "report_img":report_img==undefined ? '' : report_img,
+                    "appliance_img":appliance_img==undefined ? '' : appliance_img,
+                    "app_uid":app_uid,
+                },
+                type:"POST",
+                success:function(req){
+                    var jsonObj =  JSON.parse(req);
+                    if(jsonObj.code == 1){
+                        window.location = "{php echo mobileUrl('pc')}";
+                    }else{
+                        alert('网络错误，请稍后再试~~');
+                    }
+                }
+            });
+            return false;
+        });
+
+
+
+    });
+
+</script>
+
+</body></html>

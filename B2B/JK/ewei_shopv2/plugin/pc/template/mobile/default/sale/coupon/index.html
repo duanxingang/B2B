@@ -1,0 +1,245 @@
+{template 'pc/layout/_header'}
+<link rel="stylesheet" type="text/css" href="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/css/layui.css?v=0.2">
+<script src="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/layui.js"></script>
+<style>
+    .child-box li{
+        line-height: 30px;
+        padding: 0 5px;
+    }
+    .massage{
+        position:absolute;
+        background:#eee;
+        z-index:999;
+    }
+    .ling{
+        float: right;
+        margin-right: 10px;
+        font-size: 16px;
+        margin-top: 5px;
+    }
+</style>
+<div class="ncm-container">
+    {template 'pc/layout/member/left-layout'}
+    <div class="right-layout">
+        <div class="wrap">
+        {template 'pc/layout/member/tabmenu'}
+          <div class='fui-page  fui-page-current member-log-page' style="background-color:#ffffff;">
+            <div class='fui-content navbar' >
+                {if empty($cardslist)}
+                  <div class='content-empty' >
+                    <i class='icon icon-searchlist'></i><br/>暂时没有任何记录!
+                    </div>
+                {else} 
+                    <br/>
+                    <div class="container">
+                    <div class="row">
+                    {loop $cardslist $log}
+                    <div class='col-md-4 farter-box' style="margin:1.2rem 1.2rem;">
+                    <div style="width:350px;height:120px;border:1px solid #999;">
+                    <a href="#">
+                    <input type='hidden' value="{$log['id']}">
+                    <div style='width:150px;height:120px;float:left;'>
+                    <div style="width:4rem;text-align:center;padding:0.1rem 0;background: #55b5ff;font-size:0.5rem;color:#ffffff;top:0;right:0;">{$log['tagtitle']}</div>
+                        <div><p style="font-size:1.5rem;font-weight:bold;text-align:center;margin-top:1.1rem;color:#0279B9;">{$log['title3']}</p></div>
+                        <div><p style="font-size:0.8rem;text-align:center;margin-top:0.3rem;color:#0279B9;">{$log['title2']}</p></div>
+                    </div>
+                    <div style='width:200px;height:120px;float:left;font-size:0.7rem; line-height:1.2rem;'>
+                    <div style='margin-top:0.8rem;color:#0279B9;'>{$log['title5']}</div>
+                    <div style="color:#0279B9;">{if $log['t'] > 0}剩余{$log['last']}/{$log['t']}张{/if}</div>
+                    <div>  
+                        {if $log['timedays'] == 0}
+                        <div style="color:#0279B9;">{php echo date("Y-m-d", $log['timestart']);}至{php echo date("Y-m-d", $log['timeend'])}</div>
+                        {else}
+                        <div style="color:#0279B9;">{$log['title4']}</div>
+                        {/if}
+                        <div style="color:#0279B9;" class="ling">{if $log['t'] < 1}已发完{else}立即领取{/if}</div>
+                    </div>
+                    </div>
+                    </a>
+                    </div>
+                    <div class="child-box" style="display: none;"><div class='massage' style="width:352px;padding: 10px 0;">
+                    {if $log['money'] > 0 || $log['credit']>0}
+                    {if $log['money'] > 0}
+                    <li style="list-style:none;">所需金额:{$log['money']}积分</li>
+                    {/if}
+                    {if $log['credit'] > 0}
+                    <li style="list-style:none;">所需积分:{$log['credit']}元</li>
+                    {/if}
+                    {/if}
+
+
+                    <li style="list-style:none;">使用说明：{$log['title5']}</li>
+                    <li style="list-style:none;">使用限制：{$log['title2']}</li>
+                    <li style="list-style:none;">{if $log['getmax'] == 1}每人限领取{$log['getmax']}张 。{elseif $log['getmax'] == 0}不限领取次数{/if}</li>
+                    </div></div>
+                    </div>
+                    {/loop}
+                    </div>
+                    </div>
+                    
+                    
+                {/if}
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<style>
+.simpleAlert{position: fixed;z-index: 1000;}
+.simpleAlertShelter{position: fixed;width: 100%;height: 100%;top:0;left:0;background-color: #000;opacity: 0.3;filter:alpha(opacity=30);}
+.simpleAlertBody{position:fixed;display: none;width: 476px;height: 216px;top:50%;left:50%;margin:-188px 0 0 -238px;opacity:0;border: 1px solid #948497;background-color: #fff;}
+.simpleAlertBodyClose{position: absolute;width: 14px;height: 14px;top:10px;right: 10px;padding: 5px;cursor: pointer;}
+.simpleAlertBodyContent{position: absolute;top:30%;width:96%;height:48px;overflow-y:auto;left: 2%;text-align: center;font-size: 18px;font-weight: 600;color: #333;}
+.simpleAlertBtn{position:absolute;width: 70px;height: 34px;top:60%;border: 1px solid #bfbfbf;cursor:pointer;border-radius: 5px;color: #fff;font-size: 16px;}
+.simpleAlertBtn1{background-color: #826289;left: 25%;}
+.simpleAlertBtn2{background-color: #f7f7f7;color: #333;right: 25%;}
+.onlyOne{width: 200px;height: 36px;left: 138px;}
+</style>
+
+<script>
+
+$(function () {
+    $(".farter-box").mouseover(function () {
+        $(this).find('.child-box').show();
+    }).mouseout(function () {
+        $(this).find('.child-box').hide();
+    });
+
+
+
+    layui.use(['layer'], function(){
+        var layer = layui.layer;
+        $(".farter-box").click(function() {
+            var id = $(this).find('input').val();
+
+            layer.confirm('确定领取吗?', function(index){
+                $.ajax({
+                    url: "{php echo mobileUrl('pc/sale/coupon/detail')}",
+                    type: 'post',
+                    data: {
+                        id: id,
+                    },
+                    success: function(data){
+                        json_obj=eval('('+data+')');//把JSON字符串转换成JSON对象
+                        layer.msg(json_obj.result.message);
+                    }
+                });
+
+                layer.close(index);
+            });
+        });
+    });
+
+    //
+    // $('.farter-box').click(function(){
+    //     var id = $(this).find('input').val();
+    //    var dblChoseAlert = simpleAlert({
+    //                 "content":"确定领取吗？",
+    //                 "buttons":{
+    //                     "确定":function () {
+    //                         dblChoseAlert.close();
+    //                         setTimeout(couponsget(id),1000);
+    //                     },
+    //                     "取消":function () {
+    //                         dblChoseAlert.close();
+    //                     }
+    //                 }
+    //             })
+    //  });
+
+});
+
+  function couponsget(id){ 
+      var content = '';
+      $.ajax({
+            url: "{php echo mobileUrl('pc/sale/coupon/detail')}",
+            type: 'post',
+            data: {
+                id: id,
+            },
+            success: function(data){
+                json_obj=eval('('+data+')');//把JSON字符串转换成JSON对象
+                var onlyChoseAlert = simpleAlert({
+                    "content":json_obj.result.message,
+                    "buttons":{
+                        "确定":function () {
+                            onlyChoseAlert.close();
+                        }
+                    }
+                })
+            }
+            });
+  }
+
+var simpleAlert = function (opts) {
+    //设置默认参数
+    var opt = {
+        "closeAll": false,
+        "content": "",
+        "buttons": {}
+    }
+    //合并参数
+    var option = $.extend(opt, opts);
+    //事件
+    var dialog = {}
+    var $simpleAlert = $('<div class="simpleAlert">');
+    var $shelter = $('<div class="simpleAlertShelter">');
+    var $simpleAlertBody = $('<div class="simpleAlertBody">');
+    var $simpleAlertBodyClose = $('<img class="simpleAlertBodyClose" src="../addons/ewei_shopv2/static/images/close.png" height="14" width="14"/>');
+    var $simpleAlertBodyContent = $('<p class="simpleAlertBodyContent">' + option.content + '</p>');
+    dialog.init = function () {
+        $simpleAlertBody.append($simpleAlertBodyClose).append($simpleAlertBodyContent);
+        var num = 0;
+        var only = false;
+        var onlyArr = [];
+        for (var i = 0; i < 2; i++) {
+            for (var key in option.buttons) {
+                switch (i) {
+                    case 0:
+                        onlyArr.push(key);
+                        break;
+                    case 1:
+                        if (onlyArr.length <= 1) {
+                            only = true;
+                        } else {
+                            only = false;
+                        }
+                        num++;
+                        var $btn = $('<button class="simpleAlertBtn simpleAlertBtn' + num + '">' + key + '</button>')
+                        $btn.bind("click", option.buttons[key]);
+                        if (only) {
+                            $btn.addClass("onlyOne")
+                        }
+                        $simpleAlertBody.append($btn);
+                        break;
+                }
+
+            }
+        }
+        $simpleAlert.append($shelter).append($simpleAlertBody);
+        $("body").append($simpleAlert);
+        $simpleAlertBody.show().animate({"marginTop":"-128px","opacity":"1"},300);
+    }
+    //右上角关闭按键事件
+    $simpleAlertBodyClose.bind("click", function () {
+        option.closeAll=false;
+        dialog.close();
+    })
+    dialog.close = function () {
+        if(option.closeAll){
+            $(".simpleAlert").remove()
+        }else {
+            $simpleAlertBody.animate({"marginTop": "-188px", "opacity": "0"}, 200, function () {
+                $(".simpleAlert").last().remove()
+            });
+        }
+    }
+    dialog.init();
+    return dialog;
+}
+
+</script>
+
+{template 'pc/layout/_footer'}
+
