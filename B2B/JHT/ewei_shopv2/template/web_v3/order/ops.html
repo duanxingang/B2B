@@ -1,0 +1,242 @@
+
+{if empty($item['statusvalue'])}
+<!--未付款-->
+
+{ifp 'order.op.pay'}
+{if $item['paytypevalue']==3}
+    <a class="btn btn-primary btn-xs" data-toggle="ajaxModal" href="{php echo webUrl('order/op/send', array('id' => $item['id']))}">确认发货</a>
+{else}
+    {if $item['ismerch'] == 0}
+    <!--<a class="btn btn-primary btn-xs" data-toggle="ajaxPost" href="{php echo webUrl('order/op/pay', array('id' => $item['id']))}" data-confirm="确认此订单已付款吗？">确认付款</a><br/>-->
+    {/if}
+    <a class="btn btn-primary btn-xs fk_{$item['id']}" href="javascript:openModel('{$item['id']}')">确认付款</a><br/>
+{/if}
+{/if}
+
+{elseif $item['statusvalue'] == 1}
+<!--已付款-->
+
+{if !empty($item['addressid']) }
+<!--快递 发货-->
+{ifp 'order.op.send'}
+    <a class="btn btn-primary btn-xs" data-toggle="ajaxModal"  href="{php echo webUrl('order/op/send', array('id' => $item['id']))}">确认发货</a>
+{/if}
+{else}
+{if $item['isverify']==1}
+<!--核销 确认核销-->
+{ifp 'order.op.verify'}
+<a class="btn btn-primary btn-xs" data-toggle='ajaxPost' href="{php echo webUrl('order/op/fetch', array('id' => $item['id']))}" data-confirm="确认使用吗？">确认使用</a>
+{/if}
+{else}
+<!--自提 确认取货-->
+{ifp 'order.op.fetch'}
+<a class="btn btn-primary btn-xs" data-toggle='ajaxPost'  href="{php echo webUrl('order/op/fetch', array('id' => $item['id']))}" data-confirm="确认{if !empty($item['ccard'])}充值{else}取货{/if}吗？">确认{if !empty($item['ccard'])}充值{else}取货{/if}</a>
+{/if}
+{/if}
+
+{/if}
+
+{if $item['sendtype'] > 0}
+    {ifp 'order.op.sendcancel'}
+        <a class="text-primary" data-toggle='ajaxModal'  href="{php echo webUrl('order/op/sendcancel', array('id' => $item['id']))}" >取消发货</a>
+    {/if}
+{/if}
+{elseif $item['statusvalue'] == 2 }
+<!--已发货-->
+{if !empty($item['addressid'])}
+<!--快递 取消发货-->
+
+
+{ifp 'order.op.finish'}{if strexists($_W['action'],'order.list')}{/if}
+    {if !$item['is_singlerefund']}
+        <a class="btn btn-primary btn-xs" data-toggle='ajaxPost'  href="{php echo webUrl('order/op/finish', array('id' => $item['id']))}" data-confirm="确认订单收货吗？">确认收货</a><br />
+    {else}
+        <a class="btn btn-primary btn-xs" data-toggle='ajaxPost'  href="{php echo webUrl('order/op/finish', array('id' => $item['id']))}" >确认收货</a><br />
+    {/if}
+{/if}
+{if $detial_flag == 1 && $item['status']!=3}
+{ifp 'order.op.send'}<a class="text-primary" data-toggle="ajaxModal"  href="{php echo webUrl('order/op/changeexpress', array('id' => $item['id']))}">修改物流</a>{/if}
+{/if}
+{ifp 'order.op.sendcancel'}{if strexists($_W['action'],'order.list')}{/if}
+    <a class="text-primary" data-toggle='ajaxModal'  href="{php echo webUrl('order/op/sendcancel', array('id' => $item['id']))}" >取消发货</a>
+{/if}
+{else}
+    {ifp 'order.op.finish'}
+        {php $isonly = m('order')->checkisonlyverifygoods($item['id'])}
+        {if $isonly}
+           {if strexists($_W['action'],'order.list')}{/if}
+            {if !$item['is_singlerefund']}
+                <a class="btn btn-primary btn-xs" data-toggle='ajaxPost'  href="{php echo webUrl('order/op/finish', array('id' => $item['id']))}" data-confirm="确认完成订单吗？">确认完成</a>{/if}
+            {else}
+                <a class="btn btn-primary btn-xs" data-toggle='ajaxPost'  href="{php echo webUrl('order/op/finish', array('id' => $item['id']))}">确认完成</a>
+            {/if}
+        {/if}
+    {/if}
+
+{elseif $item['statusvalue'] == 3}
+
+{/if}
+<style>
+    .layui-layer-title{
+        padding: 0 10px 0 10px;
+        text-align: left;
+    }
+    #f-img{
+        display: none;
+        text-align: left;
+        padding: 10px;
+    }
+    .layui-upload-list{
+        width: 92px;
+        height: 92px;
+        border: 1px solid #ccc;
+        float: left;
+        margin-left: 10px;
+    }
+    #test1{
+        float: left;
+        margin-top: 10px;
+    }
+    .btn-img{
+        font-size: 16px;
+        border: 1px solid #44abf7 ;
+        padding: 5px 10px;
+        background: #44abf7 ;
+        color: #fff;
+    }
+    .btn-click{
+        text-align: center;
+        margin-top: 30px;
+    }
+    .layui-layer-close{
+        position: initial;
+    }
+    #demo1{
+        width: 100%;
+        height: 100%;
+        display: none;
+    }
+    .btn22{
+        padding: 10px;
+        color: #fff;
+        font-size: 14px;
+        background: #009688;
+        position: relative;
+    }
+    #imgFile0{
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .btn33{
+        float: left;
+        width: 92px;
+        height: 92px;
+        margin-left: 10px;
+        border: 1px solid #ccc;
+    }
+</style>
+<!--确认付款上传图片-->
+<div id="f-img">
+    <div>
+        <div style="float: left">
+            <button class="btn22">上传付款截图
+                <input type="file" name='imgFile' id='imgFile0'>
+            </button>
+        </div>
+        <div class="btn33">
+            <img id="demo1" src="" alt="">
+            <input type="hidden" id="img1" value="">
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <div class="btn-click">
+        <input type="hidden" id="ids" value="">
+        <a style="margin-right: 10px;" class="btn-img queding" href="javascript:queding();">确定</a>
+        <a class="layui-layer-close layui-layer-close1 btn-img" href="javascript:;">取消</a>
+    </div>
+</div>
+<script>
+    layui.use(['layer','upload'], function(){
+        var layer = layui.layer;
+        var upload = layui.upload;
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#imgFile0' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo webUrl('order/op/busrefund/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $('#demo1').attr('src', res.url);
+                    $('#demo1').show();
+                    $("#img1").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.msg(res.message);
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+    });
+    //点击确认付款
+    function openModel(id){
+        $("#ids").attr('value',id);
+        layer.open({
+            type: 1,
+            title: '确认付款',
+            skin: 'layui-layer-rim', //加上边框
+            area: ['420px', '240px'], //宽高
+            content: $("#f-img")
+        });
+    }
+    //确认付款
+    function queding()
+    {
+        var id = $("#ids").val();
+        var img = $("#img1").val();
+        $.ajax({
+            url:"{php echo webUrl('order/op/pay')}",
+            data:{
+                "id":id,
+                "img":img,
+            },
+            type:"POST",
+            success:function(req){
+                var jsonObj =  JSON.parse(req);
+                if(jsonObj.status == 1){
+                    layer.msg('操作成功', {time: 2000}, function(){
+                        window.location = jsonObj.result.url;
+                    });
+
+                }else{
+                    layer.msg('操作失败');
+                }
+            }
+        });
+    }
+
+</script>
+
+<!--<div class="tables">-->
+
+
+
+
+
+<!--</div>-->
+
+

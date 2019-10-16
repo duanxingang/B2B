@@ -1,0 +1,153 @@
+{template '_header'}
+<link rel="stylesheet" type="text/css" href="../addons/ewei_shopv2/template/account/default3/style.css?v=2.0.0">
+<link rel="stylesheet" type="text/css" href="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/css/layui.css?v=0.2">
+<script src="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/layui.js"></script>
+<style type="text/css">
+    .header {background-image: url("{php echo empty($set['wap']['bg'])?'../addons/ewei_shopv2/template/account/default3/bg.jpg':tomedia($set['wap']['bg'])}"); background-repeat: n}
+    .btn {background: {if !empty($set['wap']['color'])}{$set['wap']['color']}{else}#43afcf{/if};}
+    .text a {color: {if !empty($set['wap']['color'])}{$set['wap']['color']}{else}#43afcf{/if};}
+
+</style>
+<div class="fui-page">
+    {if is_h5app()}
+    <div class="fui-header">
+        <div class="fui-header-left">
+            <a class="back"> </a>
+        </div>
+        <div class="title">{if empty($type)}用户注册{else}找回密码{/if}</div>
+        <div class="fui-header-right" data-nomenu="true"></div>
+    </div>
+    {/if}
+    <div class="fui-content" >
+        <div class="header" style="background: ;">
+            {if $set['shop']['logo']}
+            <div class="logo">
+                <img src="{php echo tomedia($set['shop']['logo'])}" />
+            </div>
+            {else}
+            <div style="margin-top: 3rem" class="no-logo"></div>
+            {/if}
+            <div class="name">{$set['shop']['name']}</div>
+        </div>
+
+            <div class="fui-cell-group">
+                <div class="fui-cell">
+                    <div class="fui-cell-icon">
+                        <i class="icon icon-email"></i>
+                    </div>
+                    <div class="fui-cell-info">
+                        <input type="email" placeholder="请输入邮箱地址" class="fui-input" maxlength="40" name="email" id="email" value="{php echo trim($_GPC['email'])}" />
+                    </div>
+                </div>
+
+                <div class="fui-cell">
+                    <div class="fui-cell-icon">
+                        <i class="icon icon-people"></i>
+                    </div>
+                    <div class="fui-cell-info">
+                        <input type="tel" placeholder="请输入手机号" class="fui-input" maxlength="11" name="mobile" id="mobile" value="{php echo trim($_GPC['mobile'])}" />
+                    </div>
+                </div>
+                {if !empty($set['wap']['smsimgcode'])}
+                    <div class="fui-cell">
+                        <div class="fui-cell-icon">
+                            <i class="icon icon-safe"></i>
+                        </div>
+                        <div class="fui-cell-info">
+                            <input type="tel" placeholder="请输入图形验证码" class="fui-input" maxlength="4" name="verifycode2" id="verifycode2">
+                        </div>
+                        <img class="fui-cell-remark noremark" src="../web/index.php?c=utility&a=code&r={php echo time()}" style="width: 5rem" id="btnCode2">
+                    </div>
+                {/if}
+                <div class="fui-cell">
+                    <div class="fui-cell-icon">
+                        <i class="icon icon-email"></i>
+                    </div>
+                    <div class="fui-cell-info">
+                        <input type="tel" placeholder="请输入5位短信验证码" class="fui-input" maxlength="5" name="verifycode" id="verifycode">
+                    </div>
+                    <a class="fui-cell-remark noremark" href="javascript:;" id="btnCode">获取验证码</a>
+                </div>
+                <div class="fui-cell">
+                    <div class="fui-cell-icon">
+                        <i class="icon icon-lock"></i>
+                    </div>
+                    <div class="fui-cell-info">
+                        <input type="password" placeholder="请输入密码" class="fui-input" name="pwd" id="pwd" />
+                    </div>
+                </div>
+                <div class="fui-cell">
+                    <div class="fui-cell-icon">
+                        <i class="icon icon-lock"></i>
+                    </div>
+                    <div class="fui-cell-info">
+                        <input type="password" placeholder="请重复输入密码" class="fui-input" name="pwd1" id="pwd1">
+                    </div>
+                </div>
+            </div>
+
+        {if empty($type)}
+        <!--用户协议-->
+        <div class="agreement" style="padding-top: 5px;margin-left: 0.8rem">
+            <input type="checkbox" name="agree">
+            <a style="color: #F87622 !important;text-decoration:underline;cursor:pointer;" id="agrees" href="javascript:;">《用户许可协议》</a>
+        </div>
+        {/if}
+
+        <div class="btn" id="btnSubmit">{if empty($type)}立即注册{else}立即找回{/if}</div>
+        <div class="text">
+            <p>已有帐号? <a href="{$set['wap']['loginurl']}">立即登录</a></p>
+        </div>
+		<!--m-->
+
+        <script language='javascript'>
+            require(['biz/member/account'], function (modal) {
+                modal.initRf({backurl:'{$backurl}', type: {php echo intval($type)}, endtime: {php echo intval($endtime)}, imgcode: {php echo intval($set['wap']['smsimgcode'])}});
+            });
+        </script>
+    </div>
+</div>
+<div id="fd-img" style="display: none">
+    <div class="amemt" style="padding: 10px 30px">
+        {php echo htmlspecialchars_decode($data['user_agreement'])}
+    </div>
+</div>
+<script>
+    $(function(){
+        if($.cookie("refresh")!="no"){
+            setTimeout(function(){
+                window.location.reload();
+                $.cookie("refresh","no");
+            },5000);
+        }
+    });
+</script>
+<script language='javascript'>
+    layui.use(['laydate','upload'], function(){
+        var laydate = layui.laydate;
+        var upload = layui.upload;
+        //点击放大
+        $('#agrees').on('click',function(){
+
+            var height = 90;
+            var width = 90;
+            layer.open({
+                type: 1,
+                title: '用户许可协议',
+                // closeBtn: 0,
+                shadeClose: true,
+                area: [width + '%', height + '%'], //宽高
+                content: $("#fd-img"),
+                cancel: function(){
+                    //右上角关闭回调
+                    $("#fd-img").hide();
+                }
+            });
+
+
+        });
+
+    });
+</script>
+
+{template '_footer'}

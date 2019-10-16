@@ -1,0 +1,21 @@
+{if !empty($navs)}
+	<div class="fui-icon-group noborder">
+		{loop $navs $k $item}
+			{if $item['navname']=='自营专区'}
+			{if $group==1}
+			<div k="{$k}" class="fui-icon-col" {if !empty($item['url'])} onclick="location.href='{$item['url']}'"{/if}>
+				<div class="icon"><img src="{php echo tomedia($item['icon'])}" /></div>
+				<div class="text">{$item['navname']}</div>
+		    </div>
+			{/if}
+			{else}
+			<div k="{$k}" class="fui-icon-col" {if !empty($item['url'])} onclick="location.href='{$item['url']}'"{/if}>
+				<div class="icon"><img src="{php echo tomedia($item['icon'])}" /></div>
+				<div class="text">{$item['navname']}</div>
+			</div>
+			{/if}
+			
+		{/loop}
+	</div>
+ {/if}
+

@@ -1,0 +1,143 @@
+{template 'pc/layout/_header'}
+<div class="ncm-container">
+    {template 'pc/layout/member/left-layout'}
+    <div class="right-layout">
+        <div class="wrap">
+        {template 'pc/layout/member/tabmenu'}
+          <div class='fui-page  fui-page-current member-log-page' style="background-color:#ffffff;">
+            <div class='fui-content navbar' >
+            <div class='fui-content'>
+                <div class='fui-tab fui-tab-danger' id='cateTab'>
+                    <a href='' class="active" id='use' onclick="use()">未使用</a>
+                    <a href='' id='used' onclick="used()">已使用</a>
+                    <a href='' id='past' onclick="past()">已过期</a>
+                </div>
+                {if empty($set['closecenter'])}
+                    <a class="btn btn-default-o external" style="display: block;" href="{php echo mobileUrl('pc/sale/coupon')}"><i class="icon icon-gifts"></i> 赶紧去领券中心看看更多优惠券~</a>
+                {/if}
+            </div>
+            <div class="container" id='use1' style="min-height:800px;">
+                    <div class="row" >
+                    {if empty($use)}
+                     <div class="content">您还没有优惠券~</div>
+                    {else}
+                    {loop $use $log}
+                    <div class='col-md-4' style="border:1px solid #999;margin:1.2rem 1.2rem;">
+                    <div style='width:150px;height:120px;float:left;'>
+                    <div><p style="width:4rem;text-align:center;padding:0.1rem 0;background: #55b5ff;font-size:0.5rem;color:#fff;top:0;right:0;">{$log['tagtitle']}</p></div>
+                        <div><p style="font-size:1.5rem;font-weight:bold;text-align:center;color:#0279B9;margin-top:1.3rem;">{$log['title3']}</p></div>
+                        <div><p style="font-size:0.8rem;text-align:center;margin-top:0.2rem;color:#0279B9;">{$log['title2']}</p></div>
+                    </div>
+                    <div style='width:200px;height:120px;float:left;text-align:center;font-size:0.8rem;line-height:1.3rem; '>
+                    <div style="margin-top:1rem;color:#0279B9;">{$log['couponname']}</div>
+                    <div style="color:#0279B9;">{$log['title5']}</div>
+                    <div>
+                        
+                        {if $log['timedays'] > 0}
+                        <div style="color:#0279B9;">有效期至  {php echo date('Y-m-d',intval($log['gettime'])+(60*60*24*intval($log['timedays'])))}</div>
+                        {else}
+                        <div style="color:#0279B9;">有效期至  {php echo date('Y-m-d',intval($log['timeend']))}</div>
+                        {/if}
+                    </div> 
+                    </div>
+                    </div>
+                    {/loop}
+                    {/if}                   
+                    </div>
+                    </div>
+
+            <div class="container" id='used1' style="display:none">
+                    <div class="row" >
+                    {if empty($used)}
+                     <div class="content">您还没有优惠券~</div>
+                    {else}
+                    {loop $used $log}
+                    <div class='col-md-4' style="border:1px solid #999;margin:1.2rem 1.2rem;">
+                    <div style='width:150px;height:120px;float:left;'>
+                    <div><p style="width:4rem;text-align:center;padding:0.1rem 0;background: #c1c1c1;font-size:0.5rem;color:#fff;top:0;right:0;">{$log['tagtitle']}</p></div>
+                        <div><p style="font-size:1.5rem;font-weight:bold;text-align:center;margin-top:1.3rem;color:#999;">{$log['title3']}</p></div>
+                        <div><p style="font-size:0.8rem;text-align:center;margin-top:0.2rem;color:#999;">{$log['title2']}</p></div>
+                    </div>
+                    <div style='width:200px;height:120px;float:left;text-align:center;font-size:0.8rem;line-height:1.3rem; '>
+                    <div style="margin-top:1rem;color:#999;">{$log['couponname']}</div>
+                    <div style="color:#999;">{$log['title5']}</div>
+                    <div>
+                        {if $log['timedays'] > 0}
+                        <div style="color:#999;">有效期至  {php echo date('Y-m-d',intval($log['gettime'])+(60*60*24*intval($log['timedays'])))}</div>
+                        {else}
+                        <div style="color:#999;">有效期至  {php echo date('Y-m-d',intval($log['timeend']))}</div>
+                        {/if}
+                    </div> 
+                    </div>
+                    </div>
+                    {/loop}
+                    {/if}
+                    </div>
+                    </div>
+
+            <div class="container" id='past1' style="display:none">
+                    <div class="row" >
+                    {if empty($past)}
+                     <div class="content">您还没有优惠券~</div>
+                    {else}
+                    {loop $past $log}
+                    <div class='col-md-4' style="border:1px solid #999;margin:1.2rem 1.2rem;">
+                    <div style='width:150px;height:120px;float:left;'>
+                    <div><p style="width:4rem;text-align:center;padding:0.1rem 0;background: #c1c1c1;font-size:0.5rem;color:#fff;top:0;right:0;">{$log['tagtitle']}</p></div>
+                        <div><p style="font-size:1.5rem;font-weight:bold;text-align:center;color:#999;margin-top:1.3rem;">{$log['title3']}</p></div>
+                        <div><p style="font-size:0.8rem;text-align:center;margin-top:0.2rem;color:#999;">{$log['title2']}</p></div>
+                    </div>
+                    <div style='width:200px;height:120px;float:left;text-align:center;font-size:0.8rem;line-height:1.3rem; '>
+                    <div style="margin-top:1rem;color:#999;">{$log['couponname']}</div>
+                    <div style="color:#999;">{$log['title5']}</div>
+                    <div>
+                        {if $log['timedays'] > 0}
+                        <div style="color:#999;">有效期至  {php echo date('Y-m-d',intval($log['gettime'])+(60*60*24*intval($log['timedays'])))}</div>
+                        {else}
+                        <div style="color:#999;">有效期至  {php echo date('Y-m-d',intval($log['timeend']))}</div>
+                        {/if}
+                    </div> 
+                    </div>
+                    </div>
+                    {/loop}
+                    {/if}
+                    </div>
+                    </div>
+
+            </div>
+</div>
+</div>
+</div>
+</div>
+<style>
+.content{
+    height:300px;
+    text-align:center;
+    font-size:1.6rem;
+    margin-top:1rem;
+}
+</style>
+<script>
+function use() {
+    $(".active").removeClass('active');
+    $("#use").addClass('active');
+    $("#use1").css('display','block');
+    $("#used1").css('display','none');
+    $("#past1").css('display','none');
+}
+function used() {
+    $(".active").removeClass('active');
+    $("#used").addClass('active');
+    $("#used1").css('display','block');
+    $("#use1").css('display','none');
+    $("#past1").css('display','none');
+}
+function past() {
+    $(".active").removeClass('active');
+    $("#past").addClass('active');
+    $("#past1").css('display','block');
+    $("#used1").css('display','none');
+    $("#use1").css('display','none');
+}
+</script>
+{template '_footer'}

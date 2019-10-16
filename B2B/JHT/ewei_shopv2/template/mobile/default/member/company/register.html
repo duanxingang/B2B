@@ -1,0 +1,1078 @@
+{template '_header'}
+<link rel="stylesheet" type="text/css" href="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/css/layui.css?v=0.2">
+<script src="{php echo EWEI_SHOPV2_LOCAL}static/js/mdate/datePicker.js"></script>
+<script src="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/layui.js"></script>
+    #file-avatar {
+        opacity: 0;
+        position: absolute;
+
+        <style>
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 9;
+        background: red;
+        width: 100%;
+    }
+    .fui-list-img{
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-shrink: 0;
+        -ms-flex: 0 0 auto;
+        -webkit-flex-shrink: 0;
+        flex-shrink: 0;
+        -webkit-box-lines: single;
+        -moz-box-lines: single;
+        -webkit-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+        box-sizing: border-box;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        margin-right: .6rem;
+        color: #aaa;
+        position: relative;
+        margin-right: 0;
+    }
+    .fui-list-img img{
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+    }
+    .fui-cell-group .fui-cell  .fui-cell-remark.down:after {
+        -webkit-transform: rotate(135deg);
+        -ms-transform: rotate(135deg);
+        transform: rotate(135deg);
+        top:-.1rem;
+    }
+    .orther_img{
+        position: relative;
+        display: block;
+        width: 3.85rem;
+        font-size: 0.7rem;
+        color: #666;
+    }
+</style>
+<div class='fui-page  fui-page-current'>
+    <div class="fui-header">
+        <!--<div class="fui-header-left">-->
+            <!--<a class="back" onclick='location.back()'></a>-->
+        <!--</div>-->
+        <div class="title">企业注册</div>
+        <div class="fui-header-right">&nbsp;</div>
+    </div>
+
+    <div class='fui-content'>
+
+        <div class="fui-cell-group">
+            <div class="fui-cell must ">
+                <div class="fui-cell-label ">企业名称</div>
+                <div class="fui-cell-info"><input type="text" class='fui-input' id='company'  placeholder="请输入企业名称"  value="" /></div>
+            </div>
+            <div class="fui-cell must ">
+                <div class="fui-cell-label ">联系人</div>
+                <div class="fui-cell-info c000"><input type="text" class='fui-input' id='contact_name' name='contact_name' placeholder="请输入您的姓名"  value="" /></div>
+            </div>
+            <div class="fui-cell must">
+                <div class="fui-cell-label">手机号码</div>
+                <div class="fui-cell-info c000"><input type="text" class='fui-input' id='contact_phone' name='contact_phone' placeholder="请输入您的手机号"  value="" /></div>
+            </div>
+            <div class="fui-cell must ">
+                <div class="fui-cell-label ">企业地址</div>
+                <div class="fui-cell-info c000">
+                <!-- <input type="text" class='fui-input' id='company_address' name='company_address' placeholder="请输入企业地址"  value="" /> -->
+                <input type="text" id='areas'  name='areas' data-value="{if !empty($show_data) && !empty($address)}{$address['datavalue']}{/if}" value="" placeholder="所在地区"  class="fui-input" readonly=""/>
+                </div>
+            </div>
+            <div class="fui-cell must">
+                <div class="fui-cell-label">详细地址</div>
+                <div class="fui-cell-info c000"><input type="text" class='fui-input' id='company_areas' name='company_areas' placeholder="请输入详细地址"  value="" /></div>
+            </div>
+            <div class="fui-cell must ">
+                <div class="fui-cell-label ">发票类型</div>
+                <div class="fui-cell-info c000">
+                    <select name="invoice_type" id="invoice_type">
+                        <option value="1">电子发票</option>
+                        <!--<option value="0">普通发票</option>-->
+                        <!--<option value="2">专用发票</option>-->
+                    </select>
+                </div>
+            </div>
+
+                <div class='fui-cell must'>
+                <div class='fui-cell-label'>开票资料</div>
+                <div class='fui-cell-info'>
+                    <ul class="fui-images fui-images-sm" id="images3">
+
+                    </ul>
+                    <div id="up3" class="fui-uploader fui-uploader-sm" data-max="5" data-count="0">
+                        <input type="file" name='imgFile' id='bill_imgFile' multiple="" accept="image/*" >
+                    </div>
+                </div>
+                </div>
+
+            <div class="fui-cell must ">
+                <div class="fui-cell-label ">药品许可证</div>
+                <div class="fui-cell-info c000"><input type="text" class='fui-input' id='yao_card' name='yao_card' placeholder="请输入药品许可证号"  value="" /></div>
+            </div>
+            <div class="fui-cell must">
+                <div class="fui-cell-label">药品许可证有效期</div>
+                <div class="fui-cell-info c000">
+                    <input type="text"  class='fui-input'  id='yao_card_time' name='yao_card_time' placeholder="请选择药品许可证有效期"  value="" readonly/>
+                </div>
+                <div class="fui-cell-remark down" ></div>
+            </div>
+            <div class="fui-cell must ">
+                <div class="fui-cell-label ">GSP证书</div>
+                <div class="fui-cell-info c000"><input type="text" class='fui-input' id='gsp_card' name='gsp_card' placeholder="请输入GSP证书号"  value="" /></div>
+            </div>
+            <div class="fui-cell must">
+                <div class="fui-cell-label">GSP证书有效期</div>
+                <div class="fui-cell-info c000"><input type="text"  class='fui-input'  id='gsp_card_time' name='gsp_card_time' placeholder="请选择GSP证书有效期"  value="" readonly/></div>
+                <div class="fui-cell-remark down" ></div>
+            </div>
+            <div class='fui-cell must'>
+                <div class='fui-cell-label'>GSP证书</div>
+                <div class='fui-cell-info'>
+                    <ul class="fui-images fui-images-sm" id="images4">
+
+                    </ul>
+                    <div id="up4" class="fui-uploader fui-uploader-sm" data-max="5" data-count="0">
+                        <input type="file" name='imgFile' id='gsp_imgFile' multiple="" accept="image/*" >
+                    </div>
+                </div>
+            </div>
+            <div class="fui-cell must ">
+                <div class="fui-cell-label ">营业执照号码</div>
+                <div class="fui-cell-info c000"><input type="text" class='fui-input' id='business_card' name='business_card' placeholder="请输入营业执照号码"  value="" /></div>
+            </div>
+            <div class='fui-cell must'>
+                <div class='fui-cell-label'>营业执照</div>
+                <div class='fui-cell-info'>
+                    <ul class="fui-images fui-images-sm" id="images">
+                        <!--<li style="background-image:url('https://www.jihetang.cn/attachment/images/6/2019/04/hkGNQ0vKPnjYNEqPNEKQ6kuygwqPu6.jpg')" class="image image-sm " data-filename="images/6/2019/04/hkGNQ0vKPnjYNEqPNEKQ6kuygwqPu6.jpg">-->
+                            <!--<span id="del_img" class="image-remove">-->
+                                <!--<i class="icon icon-close"></i>-->
+                            <!--</span>-->
+                            <!--<input type="hidden" id="file_images" name="" value="images/6/2019/04/hkGNQ0vKPnjYNEqPNEKQ6kuygwqPu6.jpg">-->
+                            <!--<img src="https://www.jihetang.cn/attachment/images/6/2019/04/hkGNQ0vKPnjYNEqPNEKQ6kuygwqPu6.jpg" style="opacity: 0;width:100%;height:100%;">-->
+                        <!--</li>-->
+                    </ul>
+                    <div id="up" class="fui-uploader fui-uploader-sm" data-max="5" data-count="0">
+                        <input type="file" name='imgFile' id='imgFile0' multiple="" accept="image/*" >
+                    </div>
+                </div>
+            </div>
+            <div class='fui-cell must'>
+                <div class='fui-cell-label'>药品许可证图片</div>
+                <div class='fui-cell-info'>
+                    <ul class="fui-images fui-images-sm" id="images2">
+
+                    </ul>
+                    <div id="up2" class="fui-uploader fui-uploader-sm" data-max="5" data-count="0">
+                        <input type="file" name='imgFile' id='imgFile02' multiple="" accept="image/*" >
+                    </div>
+                </div>
+            </div>
+
+
+
+            
+            <div class='fui-cell must'>
+                <div class='fui-cell-label'>质量保证协议</div>
+                <div class='fui-cell-info'>
+                    <ul class="fui-images fui-images-sm" id="images5">
+
+                    </ul>
+                    <div id="up5" class="fui-uploader fui-uploader-sm" data-max="5" data-count="0">
+                        <input type="file" name='imgFile' id='quality_imgFile' multiple="" accept="image/*" >
+                    </div>
+                </div>
+            </div>
+            <div class='fui-cell must'>
+                <div class='fui-cell-label'>年度报告</div>
+                <div class='fui-cell-info'>
+                    <ul class="fui-images fui-images-sm" id="images12">
+
+                    </ul>
+                    <div id="up12" class="fui-uploader fui-uploader-sm" data-max="5" data-count="0">
+                        <input type="file" name='imgFile' id='report_imgFile' multiple="" accept="image/*" >
+                    </div>
+                </div>
+            </div>
+            <div class='fui-cell must'>
+                <div class='fui-cell-label'>采购员委托书</div>
+                <div class='fui-cell-info'>
+                    <ul class="fui-images fui-images-sm" id="images6">
+
+                    </ul>
+                    <div id="up6" class="fui-uploader fui-uploader-sm" data-max="5" data-count="0">
+                        <input type="file" name='imgFile' id='buyer_imgFile' multiple="" accept="image/*" >
+                    </div>
+                </div>
+            </div>
+            <div class='fui-cell must'>
+                <div class='fui-cell-label'>采购员身份证</div>
+                <div class='fui-cell-info'>
+                    <ul class="fui-images fui-images-sm" id="images7">
+
+                    </ul>
+                    <div id="up7" class="fui-uploader fui-uploader-sm" data-max="5" data-count="0">
+                        <input type="file" name='imgFile' id='buyerid_imgFile' multiple="" accept="image/*" >
+                    </div>
+                </div>
+            </div>
+            <div class='fui-cell must'>
+                <div class='orther_img'>收货委托书(选填)</div>
+                <div class='fui-cell-info'>
+                    <ul class="fui-images fui-images-sm" id="images8">
+
+                    </ul>
+                    <div id="up8" class="fui-uploader fui-uploader-sm" data-max="5" data-count="0">
+                        <input type="file" name='imgFile' id='arrive_imgFile' multiple="" accept="image/*" >
+                    </div>
+                </div>
+            </div>
+            <div class='fui-cell must'>
+                <div class='fui-cell-label'>收货委托人身份证</div>
+                <div class='fui-cell-info'>
+                    <ul class="fui-images fui-images-sm" id="images9">
+
+                    </ul>
+                    <div id="up9" class="fui-uploader fui-uploader-sm" data-max="5" data-count="0">
+                        <input type="file" name='imgFile' id='arriveid_imgFile' multiple="" accept="image/*" >
+                    </div>
+                </div>
+            </div>
+
+            <div class='fui-cell must'>
+                <div class='orther_img'>食品资格证(选填)</div>
+                <div class='fui-cell-info'>
+                    <ul class="fui-images fui-images-sm" id="images10">
+
+                    </ul>
+                    <div id="up10" class="fui-uploader fui-uploader-sm" data-max="5" data-count="0">
+                        <input type="file" name='imgFile' id='food_imgFile' multiple="" accept="image/*" >
+                    </div>
+                </div>
+            </div>
+            <div class='fui-cell must'>
+                <div class='orther_img'>医疗器械资格证(选填)</div>
+                <div class='fui-cell-info'>
+                    <ul class="fui-images fui-images-sm" id="images11">
+
+                    </ul>
+                    <div id="up11" class="fui-uploader fui-uploader-sm" data-max="5" data-count="0">
+                        <input type="file" name='imgFile' id='appliance_imgFile' multiple="" accept="image/*" >
+                    </div>
+                </div>
+            </div>
+
+            
+
+        </div>
+        <input type="hidden" id="app_uid" value="{$app_uid}">
+        <a href='#' id='btn-submit' class='btn  btn-danger block mtop btn-submit'>确认提交</a>
+
+    </div>
+    <script language='javascript' type="text/javascript">
+
+    // require(['biz/member/address'], function (modal) {
+    //     modal.initPost({new_area: {php echo $new_area}, address_street: {php echo $address_street}});
+    // });
+
+    function inPost(params) {
+        var reqParams = ['foxui.picker'];
+        if (params.new_area) {
+            reqParams = ['foxui.picker', 'foxui.citydatanew']
+        }
+
+        require(reqParams, function () {
+            $('#areas').cityPicker({
+                title: '请选择所在城市',
+                new_area: params.new_area,
+                address_street: params.address_street,
+                onClose: function (self) {
+                    var datavalue = $('#areas').attr('data-value');
+                    var codes = datavalue.split(' ');
+                    if (params.new_area && params.address_street) {
+                        var city_code = codes[1];
+                        var area_code = codes[2];
+                        city_code = city_code + '';
+                        area_code = area_code + '';
+                        var data = loadStreetData(city_code, area_code);
+                        var street = $('<input type="text" id="street"  name="street" data-value="" value="" placeholder="所在街道"  class="fui-input" readonly=""/>');
+                        var parents = $('#street').closest('.fui-cell-info');
+                        $('#street').remove();
+                        parents.append(street);
+                        street.cityPicker({title: '请选择所在街道', street: 1, data: data})
+                    }
+                }
+
+            });
+            if (params.new_area && params.address_street) {
+                var datavalue = $('#areas').attr('data-value');
+                if (datavalue) {
+                    var codes = datavalue.split(' ');
+                    var city_code = codes[1];
+                    var area_code = codes[2];
+                    var data = loadStreetData(city_code, area_code);
+                    $('#street').cityPicker({title: '请选择所在街道', street: 1, data: data})
+                }
+            }
+        });
+    }
+    inPost({new_area: {php echo $new_area}, address_street: {php echo $address_street}});
+
+</script>
+    <script language='javascript'>
+
+        var calendar = new datePicker();
+        calendar.init({
+            'trigger': '#yao_card_time', /*按钮选择器，用于触发弹出插件*/
+            'type': 'date',/*模式：date日期；datetime日期时间；time时间；ym年月；*/
+            'minDate':'2000-1-1',/*最小日期*/
+            'maxDate':'2100-12-31',/*最大日期*/
+            'onSubmit':function(){/*确认时触发事件*/
+                var theSelectData=calendar.value;
+            },
+            'onClose':function(){/*取消时触发事件*/
+            }
+        });
+        var calendar2 = new datePicker();
+        calendar2.init({
+            'trigger': '#gsp_card_time', /*按钮选择器，用于触发弹出插件*/
+            'type': 'date',/*模式：date日期；datetime日期时间；time时间；ym年月；*/
+            'minDate':'2000-1-1',/*最小日期*/
+            'maxDate':'2100-12-31',/*最大日期*/
+            'onSubmit':function(){/*确认时触发事件*/
+                var theSelectData=calendar2.value;
+            },
+            'onClose':function(){/*取消时触发事件*/
+            }
+        });
+
+        layui.use('upload', function(){
+            var upload = layui.upload;
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#imgFile0' //绑定元素
+                ,size: 1024*20 //限定大小
+                ,accept:'images'
+                ,exts:'jpg|png|gif|bmp|jpeg'
+                ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+                ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                    layer.load(1); //上传loading
+                }
+                ,done: function(res){
+                    //上传完毕回调
+                    layer.closeAll('loading'); //关闭loading
+                    if(res.status == 'success'){
+                        var html = '';
+                        html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                        html += '<span id="del_img" class="image-remove">';
+                        html += '<i class="icon icon-close"></i>';
+                        html += '</span>';
+                        html += '<input type="hidden" id="file_images" name="" value="'+res.filename+'">';
+                        html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                        html += '</li>';
+                        $("#images").append(html);
+                        $("#up").hide();
+
+                        //删除图片
+                        $('#del_img').on('click',function () {
+                            layer.confirm('确定删除图片吗？', function(index){
+                                var file = $("#file_images").val();
+                                $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                    $("#images li").remove();
+                                    $("#up").show();
+                                });
+                                layer.close(index);
+                            });
+                        })
+
+                    }else{
+                        layer.msg(res.message);
+                    }
+                }
+                ,error: function(res){
+                    //请求异常回调
+                    layer.closeAll('loading'); //关闭loading
+                }
+            });
+
+            var uploadInst1 = upload.render({
+                elem: '#imgFile02' //绑定元素
+                ,size: 1024*20 //限定大小
+                ,accept:'images'
+                ,exts:'jpg|png|gif|bmp|jpeg'
+                ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+                ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                    layer.load(1); //上传loading
+                }
+                ,done: function(res){
+                    //上传完毕回调
+                    layer.closeAll('loading'); //关闭loading
+                    if(res.status == 'success'){
+                        var html = '';
+                        html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                        html += '<span id="del_img1" class="image-remove">';
+                        html += '<i class="icon icon-close"></i>';
+                        html += '</span>';
+                        html += '<input type="hidden" id="file_images1" name="" value="'+res.filename+'">';
+                        html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                        html += '</li>';
+                        $("#images2").append(html);
+                        $("#up2").hide();
+
+                        //删除图片
+                        $('#del_img1').on('click',function () {
+                            layer.confirm('确定删除图片吗？', function(index){
+                                var file = $("#file_images1").val();
+                                $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                    $("#images2 li").remove();
+                                    $("#up2").show();
+                                });
+                                layer.close(index);
+                            });
+                        })
+
+                    }else{
+                        layer.msg(res.message);
+                    }
+                }
+                ,error: function(res){
+                    //请求异常回调
+                    layer.closeAll('loading'); //关闭loading
+                }
+            });
+
+            var uploadInst2 = upload.render({
+                elem: '#bill_imgFile' //绑定元素
+                ,size: 1024*20 //限定大小
+                ,accept:'images'
+                ,exts:'jpg|png|gif|bmp|jpeg'
+                ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+                ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                    layer.load(1); //上传loading
+                }
+                ,done: function(res){
+                    //上传完毕回调
+                    layer.closeAll('loading'); //关闭loading
+                    if(res.status == 'success'){
+                        var html = '';
+                        html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                        html += '<span id="del_img1" class="image-remove">';
+                        html += '<i class="icon icon-close"></i>';
+                        html += '</span>';
+                        html += '<input type="hidden" id="file_images2" name="" value="'+res.filename+'">';
+                        html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                        html += '</li>';
+                        $("#images3").append(html);
+                        $("#up3").hide();
+
+                        //删除图片
+                        $('#del_img1').on('click',function () {
+                            layer.confirm('确定删除图片吗？', function(index){
+                                var file = $("#file_images2").val();
+                                $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                    $("#images3 li").remove();
+                                    $("#up2").show();
+                                });
+                                layer.close(index);
+                            });
+                        })
+
+                    }else{
+                        layer.msg(res.message);
+                    }
+                }
+                ,error: function(res){
+                    //请求异常回调
+                    layer.closeAll('loading'); //关闭loading
+                }
+            });
+
+            var uploadInst3 = upload.render({
+                elem: '#gsp_imgFile' //绑定元素
+                ,size: 1024*20 //限定大小
+                ,accept:'images'
+                ,exts:'jpg|png|gif|bmp|jpeg'
+                ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+                ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                    layer.load(1); //上传loading
+                }
+                ,done: function(res){
+                    //上传完毕回调
+                    layer.closeAll('loading'); //关闭loading
+                    if(res.status == 'success'){
+                        var html = '';
+                        html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                        html += '<span id="del_img1" class="image-remove">';
+                        html += '<i class="icon icon-close"></i>';
+                        html += '</span>';
+                        html += '<input type="hidden" id="file_images3" name="" value="'+res.filename+'">';
+                        html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                        html += '</li>';
+                        $("#images4").append(html);
+                        $("#up4").hide();
+
+                        //删除图片
+                        $('#del_img1').on('click',function () {
+                            layer.confirm('确定删除图片吗？', function(index){
+                                var file = $("#file_images3").val();
+                                $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                    $("#images2 li").remove();
+                                    $("#up2").show();
+                                });
+                                layer.close(index);
+                            });
+                        })
+
+                    }else{
+                        layer.msg(res.message);
+                    }
+                }
+                ,error: function(res){
+                    //请求异常回调
+                    layer.closeAll('loading'); //关闭loading
+                }
+            });
+
+            var uploadInst4 = upload.render({
+                elem: '#quality_imgFile' //绑定元素
+                ,size: 1024*20 //限定大小
+                ,accept:'images'
+                ,exts:'jpg|png|gif|bmp|jpeg'
+                ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+                ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                    layer.load(1); //上传loading
+                }
+                ,done: function(res){
+                    //上传完毕回调
+                    layer.closeAll('loading'); //关闭loading
+                    if(res.status == 'success'){
+                        var html = '';
+                        html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                        html += '<span id="del_img1" class="image-remove">';
+                        html += '<i class="icon icon-close"></i>';
+                        html += '</span>';
+                        html += '<input type="hidden" id="file_images4" name="" value="'+res.filename+'">';
+                        html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                        html += '</li>';
+                        $("#images5").append(html);
+                        $("#up5").hide();
+
+                        //删除图片
+                        $('#del_img1').on('click',function () {
+                            layer.confirm('确定删除图片吗？', function(index){
+                                var file = $("#file_images4").val();
+                                $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                    $("#images2 li").remove();
+                                    $("#up2").show();
+                                });
+                                layer.close(index);
+                            });
+                        })
+
+                    }else{
+                        layer.msg(res.message);
+                    }
+                }
+                ,error: function(res){
+                    //请求异常回调
+                    layer.closeAll('loading'); //关闭loading
+                }
+            });
+
+            var uploadInst5 = upload.render({
+                elem: '#buyer_imgFile' //绑定元素
+                ,size: 1024*20 //限定大小
+                ,accept:'images'
+                ,exts:'jpg|png|gif|bmp|jpeg'
+                ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+                ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                    layer.load(1); //上传loading
+                }
+                ,done: function(res){
+                    //上传完毕回调
+                    layer.closeAll('loading'); //关闭loading
+                    if(res.status == 'success'){
+                        var html = '';
+                        html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                        html += '<span id="del_img1" class="image-remove">';
+                        html += '<i class="icon icon-close"></i>';
+                        html += '</span>';
+                        html += '<input type="hidden" id="file_images5" name="" value="'+res.filename+'">';
+                        html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                        html += '</li>';
+                        $("#images6").append(html);
+                        $("#up6").hide();
+
+                        //删除图片
+                        $('#del_img1').on('click',function () {
+                            layer.confirm('确定删除图片吗？', function(index){
+                                var file = $("#file_images5").val();
+                                $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                    $("#images2 li").remove();
+                                    $("#up2").show();
+                                });
+                                layer.close(index);
+                            });
+                        })
+
+                    }else{
+                        layer.msg(res.message);
+                    }
+                }
+                ,error: function(res){
+                    //请求异常回调
+                    layer.closeAll('loading'); //关闭loading
+                }
+            });
+
+            var uploadInst6 = upload.render({
+                elem: '#buyerid_imgFile' //绑定元素
+                ,size: 1024*20 //限定大小
+                ,accept:'images'
+                ,exts:'jpg|png|gif|bmp|jpeg'
+                ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+                ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                    layer.load(1); //上传loading
+                }
+                ,done: function(res){
+                    //上传完毕回调
+                    layer.closeAll('loading'); //关闭loading
+                    if(res.status == 'success'){
+                        var html = '';
+                        html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                        html += '<span id="del_img1" class="image-remove">';
+                        html += '<i class="icon icon-close"></i>';
+                        html += '</span>';
+                        html += '<input type="hidden" id="file_images6" name="" value="'+res.filename+'">';
+                        html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                        html += '</li>';
+                        $("#images7").append(html);
+                        $("#up7").hide();
+
+                        //删除图片
+                        $('#del_img1').on('click',function () {
+                            layer.confirm('确定删除图片吗？', function(index){
+                                var file = $("#file_images6").val();
+                                $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                    $("#images2 li").remove();
+                                    $("#up2").show();
+                                });
+                                layer.close(index);
+                            });
+                        })
+
+                    }else{
+                        layer.msg(res.message);
+                    }
+                }
+                ,error: function(res){
+                    //请求异常回调
+                    layer.closeAll('loading'); //关闭loading
+                }
+            });
+
+            var uploadInst7 = upload.render({
+                elem: '#arrive_imgFile' //绑定元素
+                ,size: 1024*20 //限定大小
+                ,accept:'images'
+                ,exts:'jpg|png|gif|bmp|jpeg'
+                ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+                ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                    layer.load(1); //上传loading
+                }
+                ,done: function(res){
+                    //上传完毕回调
+                    layer.closeAll('loading'); //关闭loading
+                    if(res.status == 'success'){
+                        var html = '';
+                        html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                        html += '<span id="del_img1" class="image-remove">';
+                        html += '<i class="icon icon-close"></i>';
+                        html += '</span>';
+                        html += '<input type="hidden" id="file_images7" name="" value="'+res.filename+'">';
+                        html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                        html += '</li>';
+                        $("#images8").append(html);
+                        $("#up8").hide();
+
+                        //删除图片
+                        $('#del_img1').on('click',function () {
+                            layer.confirm('确定删除图片吗？', function(index){
+                                var file = $("#file_images7").val();
+                                $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                    $("#images2 li").remove();
+                                    $("#up2").show();
+                                });
+                                layer.close(index);
+                            });
+                        })
+
+                    }else{
+                        layer.msg(res.message);
+                    }
+                }
+                ,error: function(res){
+                    //请求异常回调
+                    layer.closeAll('loading'); //关闭loading
+                }
+            });
+
+            var uploadInst8 = upload.render({
+                elem: '#arriveid_imgFile' //绑定元素
+                ,size: 1024*20 //限定大小
+                ,accept:'images'
+                ,exts:'jpg|png|gif|bmp|jpeg'
+                ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+                ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                    layer.load(1); //上传loading
+                }
+                ,done: function(res){
+                    //上传完毕回调
+                    layer.closeAll('loading'); //关闭loading
+                    if(res.status == 'success'){
+                        var html = '';
+                        html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                        html += '<span id="del_img1" class="image-remove">';
+                        html += '<i class="icon icon-close"></i>';
+                        html += '</span>';
+                        html += '<input type="hidden" id="file_images8" name="" value="'+res.filename+'">';
+                        html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                        html += '</li>';
+                        $("#images9").append(html);
+                        $("#up9").hide();
+
+                        //删除图片
+                        $('#del_img1').on('click',function () {
+                            layer.confirm('确定删除图片吗？', function(index){
+                                var file = $("#file_images8").val();
+                                $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                    $("#images2 li").remove();
+                                    $("#up2").show();
+                                });
+                                layer.close(index);
+                            });
+                        })
+
+                    }else{
+                        layer.msg(res.message);
+                    }
+                }
+                ,error: function(res){
+                    //请求异常回调
+                    layer.closeAll('loading'); //关闭loading
+                }
+            });
+
+
+            var uploadInst9 = upload.render({
+                elem: '#food_imgFile' //绑定元素
+                ,size: 1024*20 //限定大小
+                ,accept:'images'
+                ,exts:'jpg|png|gif|bmp|jpeg'
+                ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+                ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                    layer.load(1); //上传loading
+                }
+                ,done: function(res){
+                    //上传完毕回调
+                    layer.closeAll('loading'); //关闭loading
+                    if(res.status == 'success'){
+                        var html = '';
+                        html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                        html += '<span id="del_img9" class="image-remove">';
+                        html += '<i class="icon icon-close"></i>';
+                        html += '</span>';
+                        html += '<input type="hidden" id="file_images9" name="" value="'+res.filename+'">';
+                        html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                        html += '</li>';
+                        $("#images10").append(html);
+                        $("#up10").hide();
+
+                        //删除图片
+                        $('#del_img9').on('click',function () {
+                            layer.confirm('确定删除图片吗？', function(index){
+                                var file = $("#file_images9").val();
+                                $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                    $("#images10 li").remove();
+                                    $("#up10").show();
+                                });
+                                layer.close(index);
+                            });
+                        })
+
+                    }else{
+                        layer.msg(res.message);
+                    }
+                }
+                ,error: function(res){
+                    //请求异常回调
+                    layer.closeAll('loading'); //关闭loading
+                }
+            });
+
+            var uploadInst10 = upload.render({
+                elem: '#appliance_imgFile' //绑定元素
+                ,size: 1024*20 //限定大小
+                ,accept:'images'
+                ,exts:'jpg|png|gif|bmp|jpeg'
+                ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+                ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                    layer.load(1); //上传loading
+                }
+                ,done: function(res){
+                    //上传完毕回调
+                    layer.closeAll('loading'); //关闭loading
+                    if(res.status == 'success'){
+                        var html = '';
+                        html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                        html += '<span id="del_img10" class="image-remove">';
+                        html += '<i class="icon icon-close"></i>';
+                        html += '</span>';
+                        html += '<input type="hidden" id="file_images10" name="" value="'+res.filename+'">';
+                        html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                        html += '</li>';
+                        $("#images11").append(html);
+                        $("#up11").hide();
+
+                        //删除图片
+                        $('#del_img10').on('click',function () {
+                            layer.confirm('确定删除图片吗？', function(index){
+                                var file = $("#file_images10").val();
+                                $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                    $("#images11 li").remove();
+                                    $("#up11").show();
+                                });
+                                layer.close(index);
+                            });
+                        })
+
+                    }else{
+                        layer.msg(res.message);
+                    }
+                }
+                ,error: function(res){
+                    //请求异常回调
+                    layer.closeAll('loading'); //关闭loading
+                }
+            });
+
+            var uploadInst11 = upload.render({
+                elem: '#report_imgFile' //绑定元素
+                ,size: 1024*20 //限定大小
+                ,accept:'images'
+                ,exts:'jpg|png|gif|bmp|jpeg'
+                ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+                ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                    layer.load(1); //上传loading
+                }
+                ,done: function(res){
+                    //上传完毕回调
+                    layer.closeAll('loading'); //关闭loading
+                    if(res.status == 'success'){
+                        var html = '';
+                        html += '<li style="background-image:url('+res.url+')" class="image image-sm " data-filename="'+res.filename+'">' ;
+                        html += '<span id="del_img11" class="image-remove">';
+                        html += '<i class="icon icon-close"></i>';
+                        html += '</span>';
+                        html += '<input type="hidden" id="file_images11" name="" value="'+res.filename+'">';
+                        html += '<img src="'+res.url+'" style="opacity: 0;width:100%;height:100%;">';
+                        html += '</li>';
+                        $("#images12").append(html);
+                        $("#up12").hide();
+
+                        //删除图片
+                        $('#del_img11').on('click',function () {
+                            layer.confirm('确定删除图片吗？', function(index){
+                                var file = $("#file_images11").val();
+                                $.post("{php echo mobileUrl('util/uploader/remove')}",{"file":file},function(re){
+                                    $("#images12 li").remove();
+                                    $("#up12").show();
+                                });
+                                layer.close(index);
+                            });
+                        })
+
+                    }else{
+                        layer.msg(res.message);
+                    }
+                }
+                ,error: function(res){
+                    //请求异常回调
+                    layer.closeAll('loading'); //关闭loading
+                }
+            });
+            
+            //提交
+            $("#btn-submit").on('click',function () {
+                var company = $('#company').val();
+                var contact_name = $('#contact_name').val();
+                var contact_phone = $('#contact_phone').val();
+                // var company_address = $('#company_address').val();
+                var company_areas = $("input[name='company_areas']").val();
+                var invoice_type = $('#invoice_type').val();
+                var yao_card = $('#yao_card').val();
+                var yao_card_time = $('#yao_card_time').val();
+                var gsp_card = $('#gsp_card').val();
+                var gsp_card_time = $('#gsp_card_time').val();
+                var business_card = $('#business_card').val();
+                var business_img = $('#file_images').val();
+                var yao_card_img = $('#file_images1').val();
+                var app_uid = $('#app_uid').val();
+                var company_address = $('#areas').val();
+                       
+                var bill_img = $("#file_images2").val();
+                var gsp_img = $("#file_images3").val();
+                var quality_img = $("#file_images4").val();
+                var buyer_img = $("#file_images5").val();
+                var buyerid_img = $("#file_images6").val();
+                var arrive_img = $("#file_images7").val();
+                var arriveid_img = $("#file_images8").val();
+                var food_img = $("#file_images9").val();
+                var report_img = $("#file_images11").val();
+                var appliance_img = $("#file_images10").val();
+
+                //判断
+                if(company == ''){
+                    layer.msg('请输入企业名称');
+                    return false;
+                }
+                if(contact_name == ''){
+                    layer.msg('请输入姓名');
+                    return false;
+                }
+                var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0-9]{1})|(15[0-3]{1})|(15[4-9]{1})|(18[0-9]{1})|(199))+\d{8})$/;
+                if(contact_phone == ''){
+                    layer.msg('请输入手机号码');
+                    return false;
+                } else if (contact_phone.length != 11) {
+                    layer.msg('请输入11位手机号码');
+                    return false;
+                } else if (!myreg.test(contact_phone)) {
+                    layer.msg('请输入有效的手机号码');
+                    return false;
+                }
+                if(company_address == ''){
+                    layer.msg('请输入企业地址');
+                    return false;
+                }
+                if(company_areas == ''){
+                    layer.msg('请输入详细地址');
+                    return false;
+                }
+                if(invoice_type == ''){
+                    layer.msg('请选择发票类型');
+                    return false;
+                }
+                if(yao_card == ''){
+                    layer.msg('请输入药品许可证');
+                    return false;
+                }
+                if(yao_card_time == ''){
+                    layer.msg('请输入药品许可证有效期');
+                    return false;
+                }
+                if(gsp_card == ''){
+                    layer.msg('请输入GSP证书');
+                    return false;
+                }
+                if(gsp_card_time == ''){
+                    layer.msg('请输入GSP证书有效期');
+                    return false;
+                }
+                if(business_card == ''){
+                    layer.msg('请输入营业执照号码');
+                    return false;
+                }
+                if(business_img == '' || business_img == undefined){
+                    layer.msg('请上传营业执照');
+                    return false;
+                }
+                if(yao_card_img == '' || yao_card_img == undefined){
+                    layer.msg('药品许可证图片');
+                    return false;
+                }
+
+                if(quality_img == '' || quality_img == undefined){
+                    layer.msg('请上传质量保证协议图片');
+                    return false;
+                }
+                if(buyer_img == '' || buyer_img == undefined){
+                    layer.msg('请上传采购委托书图片');
+                    return false;
+                }
+                if(buyerid_img == '' || buyerid_img == undefined){
+                    layer.msg('请上传采购委托人身份证图片');
+                    return false;
+                }
+                if(report_img == '' || report_img == undefined){
+                    layer.msg('请上传年度报告图片');
+                    return false;
+                }
+                if(arriveid_img == '' || arriveid_img == undefined){
+                    layer.msg('请上传收货委托人身份证图片');
+                    return false;
+                }
+                if(bill_img == '' || bill_img == undefined){
+                    layer.msg('请上传发票资料图片');
+                    return false;
+                }
+                if(gsp_img == '' || gsp_img == undefined){
+                    layer.msg('请上传GSP证书图片');
+                    return false;
+                }
+
+                $.ajax({
+                    url:"{php echo mobileUrl('member/company/add')}",    
+                    data:{
+                        "company":company,
+                        "contact_name":contact_name,
+                        "contact_phone":contact_phone,
+                        "company_address":company_address,
+                        "company_areas":company_areas,
+                        "invoice_type":invoice_type,
+                        "yao_card":yao_card,
+                        "yao_card_time":yao_card_time,
+                        "gsp_card":gsp_card,
+                        "gsp_card_time":gsp_card_time,
+                        "business_card":business_card,
+                        "business_img":business_img==undefined ? '' : business_img,
+                        "yao_card_img":yao_card_img==undefined ? '' : yao_card_img,
+                        "quality_img":quality_img==undefined ? '' : quality_img,
+                        "buyer_img":buyer_img==undefined ? '' : buyer_img,
+                        "buyerid_img":buyerid_img==undefined ? '' : buyerid_img,
+                        "arrive_img":arrive_img==undefined ? '' : arrive_img,
+                        "arriveid_img":arriveid_img==undefined ? '' : arriveid_img,
+                        "bill_img":bill_img==undefined ? '' : bill_img,
+                        "gsp_img":gsp_img==undefined ? '' : gsp_img,
+                        "food_img":food_img==undefined ? '' : food_img,
+                        "report_img":report_img==undefined ? '' : report_img,
+                        "appliance_img":appliance_img==undefined ? '' : appliance_img,
+                        "app_uid":app_uid,
+                    },    
+                    type:"POST",   
+                    success:function(req){
+                        var jsonObj =  JSON.parse(req);
+                        if(jsonObj.code == 1){
+                            window.location = "{php echo mobileUrl('member')}";
+                        }else{
+                            layer.msg('网络错误，请稍后再试~~');
+                        }
+                    }
+                });
+
+            })
+            
+        });
+
+    </script>
+</div>
+{template '_footer'}
+

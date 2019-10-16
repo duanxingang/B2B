@@ -1,0 +1,1042 @@
+{template 'pc/layout/_header'}
+<link rel="stylesheet" type="text/css" href="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/css/layui.css?v=0.2">
+<script src="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/layui.js"></script>
+<style>
+    .fui-content{
+        background-color: #fff;
+    }
+    .layui-input{
+        min-height: 36px;
+    }
+    #invoice_type{
+        min-height: 36px;
+        width: 100%;
+    }
+    #imgFile0{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+    #imgFile01{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+    #imgFile01{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+    #imgFile03{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+    #imgFile04{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+    #imgFile05{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+    #imgFile06{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+
+    #imgFile07{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+    #imgFile08{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+    #imgFile09{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+    #imgFile10{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+    #imgFile11{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+    #imgFile12{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+            .fui-picker{
+            position: fixed;
+            bottom: 0;
+            width: 45%;
+            left: 300px;
+            border: 1px solid #ccc;
+        }
+</style>
+<div class="ncm-container">
+    {template 'pc/layout/member/left-layout'}
+    <div class="right-layout">
+        <div class="wrap">
+            {template 'pc/layout/member/tabmenu'}
+
+            <div class="fui-content fui-page">
+                
+                {if $member['is_shen'] == 0}
+                <div style="line-height: 45px;text-align: center">
+                    {if $member['content'] == null}
+                    <p style="color: #ff0011;font-size: 16px">您的账号正在审核中，请耐心等待~~</p>
+                    {else}
+                    <p style="color: #ff0011;font-size: 16px">{$member['content']}</p>
+                    {/if}
+                </div>
+                {/if}
+
+                <form class="layui-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">企业名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="company" required  lay-verify="required" value="{$member['company']}" placeholder="请输入企业名称" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">联系人</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="contact_name" required  lay-verify="required" value="{$member['contact_name']}" placeholder="请输入联系人姓名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">手机号码</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="contact_phone" required  lay-verify="required" value="{$member['contact_phone']}" placeholder="请输入联系人手机号码" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">企业地址</label>
+                        <div class="layui-input-block">
+                            <!-- <input type="text" name="company_address" required  lay-verify="required" value="{$member['company_address']}" placeholder="请输入企业地址" autocomplete="off" class="layui-input"> -->
+                            <input type="text" id='areas'  name='areas' data-value="{if !empty($show_data) && !empty($address)}{$address['datavalue']}{/if}" value="{$member['company_address']}" placeholder="所在地区"  class="fui-input layui-input" readonly=""/>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">详细地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="company_areas" required  lay-verify="required" value="{$member['company_areas']}" placeholder="请输入详细地址" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">发票类型</label>
+                        <div class="layui-input-block">
+                            <select lay-ignore id="invoice_type" name='invoice_type' class='form-control'>
+                                <option {if $member['invoice_type']==1}selected{/if} value="1">电子发票</option>
+                                <!--<option {if $member['invoice_type']==0}selected{/if} value="0">普通发票</option>-->
+                                <!--<option {if $member['invoice_type']==2}selected{/if} value="2">专用发票</option>-->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">开票资料</label>
+                        <div class="layui-input-block">
+                            <div style="width: 15%;height: 60px" class="layui-upload-drag" id="test13">
+                                {if $member['is_shen']==0}
+                                <input type="file" name='imgFile' id='imgFile03' multiple="" accept="image/*" >
+                                {/if}
+                                {if $member['bill_img']}
+                                <img style="width: 100%;height: 100%" src="{php echo tomedia($member['bill_img'])}" />
+                                {else}
+                                <i class="layui-icon"></i>
+                                <img style="display: none;width: 100%;height: 100%" src="" />
+                                {/if}
+                            </div>
+                            <input type="hidden" id="file_images3" value="{$member['bill_img']}">
+                            <p>点击上传图片</p>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">药品许可证</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="yao_card" required value="{$member['yao_card']}"  lay-verify="required" placeholder="请输入药品许可证" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">药品许可证有效期</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="test1" name="yao_card_time" value="{php echo date('Y-m-d',$member['yao_card_time'])}" required  lay-verify="required" placeholder="请输入药品许可证有效期" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">GSP证书</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="gsp_card" required value="{$member['gsp_card']}"  lay-verify="required" placeholder="请输入GSP证书" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">GSP证书有效期</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="test2" name="gsp_card_time" value="{php echo date('Y-m-d',$member['gsp_card_time'])}" required  lay-verify="required" placeholder="请输入GSP证书有效期" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">GSP证书</label>
+                        <div class="layui-input-block">
+                            <div style="width: 15%;height: 60px" class="layui-upload-drag" id="test14">
+                                {if $member['is_shen']==0}
+                                <input type="file" name='imgFile' id='imgFile04' multiple="" accept="image/*" >
+                                {/if}
+                                {if $member['gsp_img']}
+                                <img style="width: 100%;height: 100%" src="{php echo tomedia($member['gsp_img'])}" />
+                                {else}
+                                <i class="layui-icon"></i>
+                                <img style="display: none;width: 100%;height: 100%" src="" />
+                                {/if}
+                            </div>
+                            <input type="hidden" id="file_images4" value="{$member['gsp_img']}">
+                            <p>点击上传图片</p>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">营业执照号码</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="business_card" required value="{$member['business_card']}"  lay-verify="required" placeholder="请输入营业执照号码" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">营业执照图片</label>
+                        <div class="layui-input-block">
+                            <div style="width: 15%;height: 60px" class="layui-upload-drag" id="test10">
+                                {if $member['is_shen']==0}
+                                <input type="file" name='imgFile' id='imgFile0' multiple="" accept="image/*" >
+                                {/if}
+                                {if $member['business_img']}
+                                <img style="width: 100%;height: 100%" src="{php echo tomedia($member['business_img'])}" />
+                                {else}
+                                <i class="layui-icon"></i>
+                                <img style="display: none;width: 100%;height: 100%" src="" />
+                                {/if}
+                            </div>
+                            <input type="hidden" id="file_images" value="{$member['business_img']}">
+                            <p>点击上传图片</p>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">药品许可证图片</label>
+                        <div class="layui-input-block">
+                            <div style="width: 15%;height: 60px" class="layui-upload-drag" id="test11">
+                                {if $member['is_shen']==0}
+                                <input type="file" name='imgFile' id='imgFile01' multiple="" accept="image/*" >
+                                {/if}
+                                {if $member['yao_card_img']}
+                                <img style="width: 100%;height: 100%" src="{php echo tomedia($member['yao_card_img'])}" />
+                                {else}
+                                <i class="layui-icon"></i>
+                                <img style="display: none;width: 100%;height: 100%" src="" />
+                                {/if}
+                            </div>
+                            <input type="hidden" id="file_images1" value="{$member['yao_card_img']}">
+                            <p>点击上传图片</p>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">质量保证协议</label>
+                        <div class="layui-input-block">
+                            <div style="width: 15%;height: 60px" class="layui-upload-drag" id="test15">
+                                {if $member['is_shen']==0}
+                                <input type="file" name='imgFile' id='imgFile05' multiple="" accept="image/*" >
+                                {/if}
+                                {if $member['quality_img']}
+                                <img style="width: 100%;height: 100%" src="{php echo tomedia($member['quality_img'])}" />
+                                {else}
+                                <i class="layui-icon"></i>
+                                <img style="display: none;width: 100%;height: 100%" src="" />
+                                {/if}
+                            </div>
+                            <input type="hidden" id="file_images5" value="{$member['quality_img']}">
+                            <p>点击上传图片</p>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">年度报告</label>
+                        <div class="layui-input-block">
+                            <div style="width: 15%;height: 60px" class="layui-upload-drag" id="test22">
+                                {if $member['is_shen']==0}
+                                <input type="file" name='imgFile' id='imgFile12' multiple="" accept="image/*" >
+                                {/if}
+                                {if $member['report_img']}
+                                <img style="width: 100%;height: 100%" src="{php echo tomedia($member['report_img'])}" />
+                                {else}
+                                <i class="layui-icon"></i>
+                                <img style="display: none;width: 100%;height: 100%" src="" />
+                                {/if}
+                            </div>
+                            <input type="hidden" id="file_images12" value="{$member['report_img']}">
+                            <p>点击上传图片</p>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">采购员委托书</label>
+                        <div class="layui-input-block">
+                            <div style="width: 15%;height: 60px" class="layui-upload-drag" id="test16">
+                                {if $member['is_shen']==0}
+                                <input type="file" name='imgFile' id='imgFile06' multiple="" accept="image/*" >
+                                {/if}
+                                {if $member['buyer_img']}
+                                <img style="width: 100%;height: 100%" src="{php echo tomedia($member['buyer_img'])}" />
+                                {else}
+                                <i class="layui-icon"></i>
+                                <img style="display: none;width: 100%;height: 100%" src="" />
+                                {/if}
+                            </div>
+                            <input type="hidden" id="file_images6" value="{$member['buyer_img']}">
+                            <p>点击上传图片</p>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">采购员身份证</label>
+                        <div class="layui-input-block">
+                            <div style="width: 15%;height: 60px" class="layui-upload-drag" id="test17">
+                                {if $member['is_shen']==0}
+                                <input type="file" name='imgFile' id='imgFile07' multiple="" accept="image/*" >
+                                {/if}
+                                {if $member['buyerid_img']}
+                                <img style="width: 100%;height: 100%" src="{php echo tomedia($member['buyerid_img'])}" />
+                                {else}
+                                <i class="layui-icon"></i>
+                                <img style="display: none;width: 100%;height: 100%" src="" />
+                                {/if}
+                            </div>
+                            <input type="hidden" id="file_images7" value="{$member['buyerid_img']}">
+                            <p>点击上传图片</p>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">收货委托书(选填)</label>
+                        <div class="layui-input-block">
+                            <div style="width: 15%;height: 60px" class="layui-upload-drag" id="test18">
+                                {if $member['is_shen']==0}
+                                <input type="file" name='imgFile' id='imgFile08' multiple="" accept="image/*" >
+                                {/if}
+                                {if $member['arrive_img'] != ' ' }
+                                <img style="width: 100%;height: 100%" src="{php echo tomedia($member['arrive_img'])}" />
+                                {else}
+                                <i class="layui-icon"></i>
+                                <img style="display: none;width: 100%;height: 100%" src="" />
+                                {/if}
+                            </div>
+                            <input type="hidden" id="file_images8" value="{$member['arrive_img']}">
+                            <p>点击上传图片</p>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">收货委托人身份证</label>
+                        <div class="layui-input-block">
+                            <div style="width: 15%;height: 60px" class="layui-upload-drag" id="test19">
+                                {if $member['is_shen']==0}
+                                <input type="file" name='imgFile' id='imgFile09' multiple="" accept="image/*" >
+                                {/if}
+                                {if $member['arriveid_img']}
+                                <img style="width: 100%;height: 100%" src="{php echo tomedia($member['arriveid_img'])}" />
+                                {else}
+                                <i class="layui-icon"></i>
+                                <img style="display: none;width: 100%;height: 100%" src="" />
+                                {/if}
+                            </div>
+                            <input type="hidden" id="file_images9" value="{$member['arriveid_img']}">
+                            <p>点击上传图片</p>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">食品资格证(选填)</label>
+                        <div class="layui-input-block">
+                            <div style="width: 15%;height: 60px" class="layui-upload-drag" id="test20">
+                                {if $member['is_shen']==0}
+                                <input type="file" name='imgFile' id='imgFile10' multiple="" accept="image/*" >
+                                {/if}
+                                {if $member['food_img'] != ' ' }
+                                <img style="width: 100%;height: 100%" src="{php echo tomedia($member['food_img'])}" />
+                                {else}
+                                <i class="layui-icon"></i>
+                                <img style="display: none;width: 100%;height: 100%" src="" />
+                                {/if}
+                            </div>
+                            <input type="hidden" id="file_images10" value="{$member['food_img']}">
+                            <p>点击上传图片</p>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">医疗器械资格证(选填)</label>
+                        <div class="layui-input-block">
+                            <div style="width: 15%;height: 60px" class="layui-upload-drag" id="test21">
+                                {if $member['is_shen']==0}
+                                <input type="file" name='imgFile' id='imgFile11' multiple="" accept="image/*" >
+                                {/if}
+                                {if $member['appliance_img'] != ' ' }
+                                <img style="width: 100%;height: 100%" src="{php echo tomedia($member['appliance_img'])}" />
+                                {else}
+                                <i class="layui-icon"></i>
+                                <img style="display: none;width: 100%;height: 100%" src="" />
+                                {/if}
+                            </div>
+                            <input type="hidden" id="file_images11" value="{$member['appliance_img']}">
+                            <p>点击上传图片</p>
+                        </div>
+                    </div>
+
+                    
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <input type="hidden" id="app_uid" value="{$member['id']}">
+                            {if $member['is_shen']==0}
+                            <button class="layui-btn btn-submit" lay-submit lay-filter="formDemo">确认修改</button>
+                            {/if}
+                        </div>
+                    </div>
+                </form>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script language='javascript' type="text/javascript">
+
+    // require(['biz/member/address'], function (modal) {
+    //     modal.initPost({new_area: {php echo $new_area}, address_street: {php echo $address_street}});
+    // });
+
+    function inPost(params) {
+        var reqParams = ['foxui.picker'];
+        if (params.new_area) {
+            reqParams = ['foxui.picker', 'foxui.citydatanew']
+        }
+
+        require(reqParams, function () {
+            $('#areas').cityPicker({
+                title: '请选择所在城市',
+                new_area: params.new_area,
+                address_street: params.address_street,
+                onClose: function (self) {
+                    var datavalue = $('#areas').attr('data-value');
+                    var codes = datavalue.split(' ');
+                    if (params.new_area && params.address_street) {
+                        var city_code = codes[1];
+                        var area_code = codes[2];
+                        city_code = city_code + '';
+                        area_code = area_code + '';
+                        var data = loadStreetData(city_code, area_code);
+                        var street = $('<input type="text" id="street"  name="street" data-value="" value="" placeholder="所在街道"  class="fui-input" readonly=""/>');
+                        var parents = $('#street').closest('.fui-cell-info');
+                        $('#street').remove();
+                        parents.append(street);
+                        street.cityPicker({title: '请选择所在街道', street: 1, data: data})
+                    }
+                }
+
+            });
+            if (params.new_area && params.address_street) {
+                var datavalue = $('#areas').attr('data-value');
+                if (datavalue) {
+                    var codes = datavalue.split(' ');
+                    var city_code = codes[1];
+                    var area_code = codes[2];
+                    var data = loadStreetData(city_code, area_code);
+                    $('#street').cityPicker({title: '请选择所在街道', street: 1, data: data})
+                }
+            }
+        });
+    }
+    inPost({new_area: {php echo $new_area}, address_street: {php echo $address_street}});
+
+</script>
+
+<script language='javascript'>
+    // require(['../addons/ewei_shopv2/plugin/pc/biz/member/info.js'], function (modal) {
+    //     modal.init({
+    //         returnurl:"{$returnurl}",
+    //         template_flag: {php echo intval($template_flag)},
+    //         wapopen: {php echo intval($wapset['open'])}
+    //     });
+    // });
+    layui.use(['laydate','upload','layer','form'], function(){
+        var laydate = layui.laydate;
+        var upload = layui.upload;
+        var layer = layui.layer;
+        var form = layui.form;
+        //选择日期
+        //常规用法
+        laydate.render({
+            elem: '#test1'
+        });
+        laydate.render({
+            elem: '#test2'
+        });
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#imgFile0' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test10 i").hide();
+                    $("#test10 img").attr('src',res.url);
+                    $("#test10 img").show();
+                    $("#file_images").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+        //执行实例
+        var uploadInst1 = upload.render({
+            elem: '#imgFile01' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test11 i").hide();
+                    $("#test11 img").attr('src',res.url);
+                    $("#test11 img").show();
+                    $("#file_images1").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst3 = upload.render({
+            elem: '#imgFile03' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test13 i").hide();
+                    $("#test13 img").attr('src',res.url);
+                    $("#test13 img").show();
+                    $("#file_images3").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst4 = upload.render({
+            elem: '#imgFile04' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test14 i").hide();
+                    $("#test14 img").attr('src',res.url);
+                    $("#test14 img").show();
+                    $("#file_images4").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst5 = upload.render({
+            elem: '#imgFile05' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test15 i").hide();
+                    $("#test15 img").attr('src',res.url);
+                    $("#test15 img").show();
+                    $("#file_images5").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst6 = upload.render({
+            elem: '#imgFile06' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test16 i").hide();
+                    $("#test16 img").attr('src',res.url);
+                    $("#test16 img").show();
+                    $("#file_images6").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst7 = upload.render({
+            elem: '#imgFile07' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test17 i").hide();
+                    $("#test17 img").attr('src',res.url);
+                    $("#test17 img").show();
+                    $("#file_images7").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst8 = upload.render({
+            elem: '#imgFile08' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test18 i").hide();
+                    $("#test18 img").attr('src',res.url);
+                    $("#test18 img").show();
+                    $("#file_images8").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst9 = upload.render({
+            elem: '#imgFile09' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test19 i").hide();
+                    $("#test19 img").attr('src',res.url);
+                    $("#test19 img").show();
+                    $("#file_images9").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst10 = upload.render({
+            elem: '#imgFile10' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test20 i").hide();
+                    $("#test20 img").attr('src',res.url);
+                    $("#test20 img").show();
+                    $("#file_images10").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst11 = upload.render({
+            elem: '#imgFile11' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test21 i").hide();
+                    $("#test21 img").attr('src',res.url);
+                    $("#test21 img").show();
+                    $("#file_images11").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        var uploadInst12 = upload.render({
+            elem: '#imgFile12' //绑定元素
+            ,size: 1024*20 //限定大小
+            ,accept:'images'
+            ,exts:'jpg|png|gif|bmp|jpeg'
+            ,url: "{php echo mobileUrl('member/company/upload')}" //上传接口
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(1); //上传loading
+            }
+            ,done: function(res){
+                //上传完毕回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status == 'success'){
+                    $("#test22 i").hide();
+                    $("#test22 img").attr('src',res.url);
+                    $("#test22 img").show();
+                    $("#file_images12").attr('value',res.filename);
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+            ,error: function(res){
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+        //监听提交
+        $(".btn-submit").on('click',function (){
+            var company = $("input[name='company']").val();
+            var contact_name = $("input[name='contact_name']").val();
+            var contact_phone = $("input[name='contact_phone']").val();
+            // var company_address = $("input[name='company_address']").val();
+            var company_areas = $("input[name='company_areas']").val();
+            var invoice_type = $('#invoice_type').val();
+            var yao_card = $("input[name='yao_card']").val();
+            var yao_card_time = $("input[name='yao_card_time']").val();
+            var gsp_card = $("input[name='gsp_card']").val();
+            var gsp_card_time = $("input[name='gsp_card_time']").val();
+            var business_card = $("input[name='business_card']").val();
+            var business_img = $("#file_images").val();
+            var yao_card_img = $("#file_images1").val();
+            var app_uid = $('#app_uid').val();
+            var company_address = $('#areas').val();
+
+            var bill_img = $("#file_images3").val();
+            var gsp_img = $("#file_images4").val();
+            var quality_img = $("#file_images5").val();
+            var buyer_img = $("#file_images6").val();
+            var buyerid_img = $("#file_images7").val();
+            var arrive_img = $("#file_images8").val();
+            var arriveid_img = $("#file_images9").val();
+            var food_img = $("#file_images10").val();
+            var appliance_img = $("#file_images11").val();
+            var report_img = $("#file_images12").val();
+            //判断
+            if(company == ''){
+                layer.msg('请输入企业名称');
+                return false;
+            }
+            if(contact_name == ''){
+                layer.msg('请输入姓名');
+                return false;
+            }
+            var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0-9]{1})|(15[0-3]{1})|(15[4-9]{1})|(18[0-9]{1})|(199))+\d{8})$/;
+            if(contact_phone == ''){
+                layer.msg('请输入手机号码');
+                return false;
+            } else if (contact_phone.length != 11) {
+                layer.msg('请输入11位手机号码');
+                return false;
+            } else if (!myreg.test(contact_phone)) {
+                layer.msg('请输入有效的手机号码');
+                return false;
+            }
+            if(company_address == ''){
+                layer.msg('请输入企业地址');
+                return false;
+            }
+            if(company_areas == ''){
+                layer.msg('请输入详细地址');
+                return false;
+            }
+            if(invoice_type == ''){
+                layer.msg('请选择发票类型');
+                return false;
+            }
+            if(yao_card == ''){
+                layer.msg('请输入药品许可证');
+                return false;
+            }
+            if(yao_card_time == ''){
+                layer.msg('请输入药品许可证有效期');
+                return false;
+            }
+            if(gsp_card == ''){
+                layer.msg('请输入GSP证书');
+                return false;
+            }
+            if(gsp_card_time == ''){
+                layer.msg('请输入GSP证书有效期');
+                return false;
+            }
+            if(business_card == ''){
+                layer.msg('请输入营业执照号码');
+                return false;
+            }
+            if(business_img == '' || business_img == undefined){
+                layer.msg('请上传营业执照');
+                return false;
+            }
+            if(yao_card_img == '' || yao_card_img == undefined){
+                layer.msg('药品许可证图片');
+                return false;
+            }
+
+            if(quality_img == '' || quality_img == undefined){
+                    layer.msg('请上传质量保证协议图片');
+                    return false;
+            }
+            if(buyer_img == '' || buyer_img == undefined){
+                layer.msg('请上传采购委托书图片');
+                return false;
+            }
+            if(buyerid_img == '' || buyerid_img == undefined){
+                layer.msg('请上传采购委托人身份证图片');
+                return false;
+            }
+            if(report_img == '' || report_img == undefined){
+                layer.msg('请上传年度报告图片');
+                return false;
+            }
+            if(arriveid_img == '' || arriveid_img == undefined){
+                layer.msg('请上传收货委托人身份证图片');
+                return false;
+            }
+            if(bill_img == '' || bill_img == undefined){
+                layer.msg('请上传发票资料图片');
+                return false;
+            }
+            if(gsp_img == '' || gsp_img == undefined){
+                layer.msg('请上传GSP证书图片');
+                return false;
+            }
+
+            $.ajax({
+                url:"{php echo mobileUrl('pc.member.company.edit')}",
+                data:{
+                    "company":company,
+                    "contact_name":contact_name,
+                    "contact_phone":contact_phone,
+                    "company_address":company_address,
+                    "company_areas":company_areas,
+                    "invoice_type":invoice_type,
+                    "yao_card":yao_card,
+                    "yao_card_time":yao_card_time,
+                    "gsp_card":gsp_card,
+                    "gsp_card_time":gsp_card_time,
+                    "business_card":business_card,
+                    "business_img":business_img==undefined ? '' : business_img,
+                    "yao_card_img":yao_card_img==undefined ? '' : yao_card_img,
+                    "quality_img":quality_img==undefined ? '' : quality_img,
+                    "buyer_img":buyer_img==undefined ? '' : buyer_img,
+                    "buyerid_img":buyerid_img==undefined ? '' : buyerid_img,
+                    "arrive_img":arrive_img==undefined ? '' : arrive_img,
+                    "arriveid_img":arriveid_img==undefined ? '' : arriveid_img,
+                    "bill_img":bill_img==undefined ? '' : bill_img,
+                    "gsp_img":gsp_img==undefined ? '' : gsp_img,
+                    "food_img":food_img==undefined ? '' : food_img,
+                    "report_img":report_img==undefined ? '' : report_img,
+                    "appliance_img":appliance_img==undefined ? '' : appliance_img,
+                    "app_uid":app_uid,
+                },
+                type:"POST",
+                success:function(req){
+                    var jsonObj =  JSON.parse(req);
+                    if(jsonObj.code == 1){
+                        layer.msg('修改成功', {
+                            icon: 1,
+                            time: 2000
+                        }, function(){
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg('网络错误，请稍后再试~~');
+                    }
+                }
+            });
+            return false;
+        });
+
+
+
+    });
+</script>
+{template 'pc/layout/_footer'}

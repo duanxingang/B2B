@@ -1,0 +1,558 @@
+{template '_header'}
+<script type="text/javascript" src="../addons/ewei_shopv2/static/js/dist/area/cascade.js"></script>
+
+<style>
+.fui-picker{position:fixed;bottom:0;width:45%;left:300px;border:1px solid #ccc;}
+</style>
+<link rel="stylesheet" type="text/css" href="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/css/layui.css?v=0.2">
+<script src="{php echo EWEI_SHOPV2_LOCAL}static/js/layui/layui.js"></script>
+
+<div class="page-header">当前位置：<span class="text-primary">企业信息</span></div>
+<div class="page-content">
+
+
+    <form {ifp 'member.list.edit'}action="" method='post'{/if} class='form-horizontal form-validate'>
+    <input type="hidden" name="referer" value="" />
+    <div class="tabs-container">
+        <div class="tabs">
+            <div class="tab-content ">
+                <div id="tab-basic" class="tab-pane active">
+                    <div class="form-group-title">ERP系统信息  </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">erp客户ID</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <input type="text" name="data[erp_user_id]" class="form-control" value="{$member['erp_user_id']}" placeholder=""/>
+                            </div>
+                            {else}
+                            <input type="hidden" name="data[erp_user_id]" value="{$member['erp_user_id']}">
+                            <div class='form-control-static'>{$member['erp_user_id']}</div>
+                            {/if}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg control-label">开户人</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            {if empty($member['opener'])}
+                            <div class="input-group fixsingle-input-group">
+                                <input type="text" name="data[opener]" class="form-control" value="{$member['opener']}" placeholder=""/>
+                            </div>
+                            {else}
+                            <input type="hidden" name="data[opener]" value="{$member['opener']}">
+                            <div class='form-control-static'>{$member['opener']}</div>
+                            {/if}
+                            {else}
+                            <input type="hidden" name="data[opener]" value="{$member['opener']}">
+                            <div class='form-control-static'>{$member['opener']}</div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">业务员</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <input type="text" name="data[salesman]" class="form-control" value="{$member['salesman']}" placeholder=""/>
+                            </div>
+                            {else}
+                            <div class='form-control-static'>{$member['salesman']}</div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">跟单员</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <input type="text" name="data[gdman]" class="form-control" value="{$member['gdman']}" placeholder=""/>
+                            </div>
+                            {else}
+                            <div class='form-control-static'>{$member['gdman']}</div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">上级经理</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <input type="text" name="data[regional]" class="form-control" value="{$member['regional']}" placeholder=""/>
+                            </div>
+                            {else}
+                            <div class='form-control-static'>{$member['regional']}</div>
+                            {/if}
+                        </div>
+                    </div>
+
+                    <div class="form-group-title">客户信息  </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">企业名称</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <input type="text" name="data[company]" class="form-control" value="{$member['company']}" placeholder=""/>
+                            </div>
+                            {else}
+                            <div class='form-control-static'>{$member['company']}</div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">联系人</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <input type="text" name="data[contact_name]" class="form-control" value="{$member['contact_name']}" placeholder=""/>
+                            </div>
+                            {else}
+                            <div class='form-control-static'>{$member['contact_name']}</div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">手机号码</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <input type="text" name="data[contact_phone]" class="form-control" value="{$member['contact_phone']}" placeholder=""/>
+                            </div>
+                            {else}
+                            <div class='form-control-static'>{$member['contact_phone']}</div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">企业地址</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <p>
+                                <select id="sel-provance" name="data[p]" onChange="selectCity();" class="select form-control" style="width:130px;display:inline;">
+                                    <option value="" selected="true">省/直辖市</option>
+                                </select>
+                                <select id="sel-city" name="data[c]" onChange="selectcounty(0)" class="select form-control" style="width:135px;display:inline;">
+                                    <option value="" selected="true">请选择</option>
+                                </select>
+                                <select id="sel-area" name="data[a]" class="select form-control" style="width:130px;display:inline;">
+                                    <option value="" selected="true">请选择</option>
+                                </select>
+                            </p>
+                            {else}
+                            <div class='form-control-static'>{$member['company_address']}</div>
+                            {/if}
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">详细地址</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <input type="text" name="data[company_areas]" class="form-control" value="{$member['company_areas']}" placeholder=""/>
+                            </div>
+                            {else}
+                            <div class='form-control-static'>{$member['company_areas']}</div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">发票类型</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <!--<input type="text" name="data[branch_day]" class="form-control" value="{$member['branch_day']}" placeholder=""/>-->
+                                <select id="invoice_type" name='data[invoice_type]' class='form-control'>
+                                    <option value="1" {if $member['invoice_type']==1}selected{/if}>电子发票</option>
+                                    <!--<option value="0" {if $member['invoice_type']==0}selected{/if}>普通发票</option>-->
+                                    <!--<option value="2" {if $member['invoice_type']==2}selected{/if}>专用发票</option>-->
+                                </select>
+                            </div>
+                            {else}
+                            <div class='form-control-static'>
+                                <!--<select id="invoice_type" name='data[invoice_type]' class='form-control'>-->
+                                    <!--<option value="0">普通发票</option>-->
+                                    <!--<option value="1">电子发票</option>-->
+                                    <!--<option value="2">专用发票</option>-->
+                                <!--</select>-->
+                            </div>
+                            {/if}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg control-label">开票资料图片</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            {php echo tpl_form_field_image2('data[bill_img]', $member['bill_img'])}
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">药品许可证</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <input type="text" name="data[yao_card]" class="form-control" value="{$member['yao_card']}" placeholder=""/>
+                            </div>
+                            {else}
+                            <div class='form-control-static'>{$member['yao_card']}</div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">药品许可证有效期</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <input id="test2" type="text" name="data[yao_card_time]" class="form-control" value="{php echo date('Y-m-d',$member['yao_card_time'])}" placeholder=""/>
+                            </div>
+                            {else}
+                            <div class='form-control-static'>
+                                {php echo date('Y-m-d',$member['yao_card_time'])}
+                            </div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">GSP证书编号</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <input type="text" name="data[gsp_card]" class="form-control" value="{$member['gsp_card']}" placeholder=""/>
+                            </div>
+                            {else}
+                            <div class='form-control-static'>{$member['gsp_card']}</div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">GSP证书有效期</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <input type="text" id="test3" name="data[gsp_card_time]" class="form-control" value="{php echo date('Y-m-d',$member['gsp_card_time'])}" placeholder=""/>
+                            </div>
+                            {else}
+                            <div class='form-control-static'>{php echo date('Y-m-d',$member['gsp_card_time'])}</div>
+                            {/if}
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="col-lg control-label">GSP证书图片</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            {php echo tpl_form_field_image2('data[gsp_img]', $member['gsp_img'])}
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">营业执照号码</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <input type="text" name="data[business_card]" class="form-control" value="{$member['business_card']}" placeholder=""/>
+                            </div>
+                            {else}
+                            <div class='form-control-static'>{$member['business_card']}</div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">营业执照图片</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            {php echo tpl_form_field_image2('data[business_img]', $member['business_img'])}
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">药品许可证图片</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            {php echo tpl_form_field_image2('data[yao_card_img]', $member['yao_card_img'])}
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">质量保证协议</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            {php echo tpl_form_field_image2('data[quality_img]', $member['quality_img'])}
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">年度报告</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            {php echo tpl_form_field_image2('data[report_img]', $member['report_img'])}
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">采购员委托书</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            {php echo tpl_form_field_image2('data[buyer_img]', $member['buyer_img'])}
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">采购员身份证</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            {php echo tpl_form_field_image2('data[buyerid_img]', $member['buyerid_img'])}
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">收货委托书(选填)</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            {php echo tpl_form_field_image2('data[arrive_img]', $member['arrive_img'])}
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">收货委托人身份证</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            {php echo tpl_form_field_image2('data[arriveid_img]', $member['arriveid_img'])}
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">食品资格证(选填)</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            {php echo tpl_form_field_image2('data[food_img]', $member['food_img'])}
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg control-label">医疗器械资格证(选填)</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            {php echo tpl_form_field_image2('data[appliance_img]', $member['appliance_img'])}
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="form-group">
+                        <label class="col-lg control-label">配送方式</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <label class="radio-inline"><input type="radio" name="data[delivery]" value="0" {if $member['delivery']==0}checked{/if}>车配</label>
+                                <label class="radio-inline" ><input type="radio" name="data[delivery]" value="1" {if $member['delivery']==1}checked{/if}>快递</label>
+                            </div>
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg control-label">
+                            经营类别
+                        </label>
+                        <div id="sells" class="col-sm-9 col-xs-12" style="line-height: 30px;">
+                            {ifp 'member.list.edit'}
+
+                            {loop $sell_cates $vv}
+                            <input type='checkbox' {if in_array($vv, $member['bus_cate'])}checked{/if} name="data[bus_cate][]" value="{$vv}" class="checkone sell-item"/> {$vv} &nbsp;
+                            {/loop}
+
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-lg control-label">审核</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <div class="input-group fixsingle-input-group">
+                                <label class="radio-inline"><input type="radio" name="data[is_shen]" value="1" {if $member['is_shen']==1}checked{/if}>已审核</label>
+                                <label class="radio-inline" ><input type="radio" name="data[is_shen]" value="0" {if $member['is_shen']==0}checked{/if}>待审核</label>
+                            </div>
+                            {else}
+                            <div class='form-control-static'></div>
+                            {/if}
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg control-label">备注</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'member.list.edit'}
+                            <textarea name="data[content]" class='form-control' rows="5">{$member['content']}</textarea>
+                            <span class='help-block'>审核不通过可注明原因</span>
+                            {else}
+                            <div class='form-control-static'>{$member['content']}</div>
+                            {/if}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="form-group"></div>
+    <div class="form-group">
+        <label class="col-lg control-label"></label>
+        <div class="col-sm-9 col-xs-12">
+            <input type="hidden" name="data[id]" id="id" value="{$member['id']}">
+            <input type="hidden" name="data[openid]" id="openid" value="{$member['openid']}">
+            {ifp 'member.list.edit'}
+            <input type="submit"  value="提交" class="btn btn-primary" />
+            {/if}
+            <input type="button" class="btn btn-default" name="submit" onclick="history.back();" value="返回列表" {ifp 'member.list.edit'}style='margin-left:10px;'{/if} />
+        </div>
+    </div>
+
+    </form>
+</div>
+<div id="fd-img" style="display: none">
+    <img style="width: 100%;" src="" alt="" />
+</div>
+<script language='javascript' type="text/javascript">
+
+    $(function(){
+        cascdeInit("{php echo $new_area}","0","{php echo $member['p']}","{php echo $member['c']}","{php echo $member['a']}");
+    });
+
+</script>
+<script language='javascript'>
+    layui.use(['laydate','upload'], function(){
+        var laydate = layui.laydate;
+        var upload = layui.upload;
+        //选择日期
+        //常规用法
+        laydate.render({
+            elem: '#test2'
+        });
+        laydate.render({
+            elem: '#test3'
+        });
+        //提交
+        // $("#submit").on('click',function () {
+        //     var erp_user_id = $("input[name='erp_user_id']").val();
+        //     var company = $("input[name='company']").val();
+        //     var contact_name = $("input[name='contact_name']").val();
+        //     var contact_phone = $("input[name='contact_phone']").val();
+        //     var company_address = $("input[name='company_address']").val();
+        //     var invoice_type = $('#invoice_type').val();
+        //     var yao_card = $("input[name='yao_card']").val();
+        //     var yao_card_time = $("input[name='yao_card_time']").val();
+        //     var gsp_card = $("input[name='gsp_card']").val();
+        //     var gsp_card_time = $("input[name='gsp_card_time']").val();
+        //     var business_card = $("input[name='business_card']").val();
+        //     var business_img = $("input[name='business_img']").val();
+        //     var yao_card_img = $("input[name='yao_card_img']").val();
+        //     var content = $("#content").val();
+        //     var is_shen = $('input:radio[name="is_shen"]:checked').val();
+        //     var uid = $("#uid").val();
+        //     $.ajax({
+        //         url:"{php echo webUrl('member/list/company')}",
+        //         data:{
+        //             "erp_user_id":erp_user_id,
+        //             "company":company,
+        //             "contact_name":contact_name,
+        //             "contact_phone":contact_phone,
+        //             "company_address":company_address,
+        //             "invoice_type":invoice_type,
+        //             "yao_card":yao_card,
+        //             "yao_card_time":yao_card_time,
+        //             "gsp_card":gsp_card,
+        //             "gsp_card_time":gsp_card_time,
+        //             "business_card":business_card,
+        //             "business_img":business_img==undefined ? '' : business_img,
+        //             "yao_card_img":yao_card_img==undefined ? '' : yao_card_img,
+        //             "content":content,
+        //             "is_shen":is_shen,
+        //             "uid":uid,
+        //             "account":"{php echo json_encode($_W['account'])}"
+        //         },
+        //         type:"POST",
+        //         success:function(req){
+        //             var jsonObj =  JSON.parse(req);
+        //             if(jsonObj.code == 1){
+        //                 layer.msg('修改成功');
+        //                 location.reload();
+        //             }else{
+        //                 layer.msg(jsonObj.message);
+        //             }
+        //         }
+        //     });
+        //     return false;
+        // });
+
+
+        //点击放大图片
+        $('.img-thumbnail').on('click',function(){
+            var img = $(this).attr("src");
+            $("#fd-img img").attr("src",img);
+            var height = 580;//拿的图片原来宽高，建议自定义宽高
+            var width = 1000;
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                shadeClose: true,
+                area: [width + 'px', height + 'px'], //宽高
+                content: $("#fd-img")
+            });
+
+        });
+        //鼠标悬浮放大图片
+        $('.img-thumbnail').hover(function(){
+            var img = "<img class='img_msg' src='"+$(this).attr('src')+"' style='width:770px;' />";
+            img_show = layer.tips(img, this,{
+                tips:[2, 'rgba(41,41,41,.5)']
+                ,area: ['800px']
+            });
+        },function(){
+            layer.close(img_show);
+        });
+
+
+    });
+
+</script>
+
+{template '_footer'}

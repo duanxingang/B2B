@@ -1,0 +1,70 @@
+{if !empty($indexrecommands)}
+<style>
+	.buy-cart-num{
+		position: absolute;
+		top: -0.5rem;
+		right: -0.2rem;
+		border: 1px solid #44abf7;
+		border-radius: 50%;
+		background: #44abf7;
+		padding-left: 0.2rem;
+		padding-right: 0.2rem;
+	}
+	.buy-cart-num span{
+		color: #fff2e2;
+	}
+</style>
+	<div class="fui-line" style="background: #f4f4f4;">
+		<div class="text text-danger"><i class="icon icon-likefill"></i> 为您推荐</div>
+	</div>
+	<div class="fui-goods-group {if empty($goodsstyle)} block{/if} border">
+		{loop $indexrecommands $item}
+			<div class="fui-goods-item" data-goodsid="{$item['id']}" data-type="{$item['type']}">
+				<a href="{if $item['type']==9}{php echo mobileUrl('cycelbuy/goods/detail', array('id'=>$item['id']))}{else}{php echo mobileUrl('goods/detail', array('id'=>$item['id']))}{/if}{if !empty($frommyshop)}&frommyshop=1{/if}" data-nocache='true'>
+
+					{if !empty($item['thumb'])}
+					<div class="image" data-lazy-background="{php echo tomedia($item['thumb'])}">
+					{else}
+						<div class="image" data-lazy-background="{EWEI_SHOPV2_STATIC}images/jihetang.jpg">
+					{/if}
+
+
+						{if !empty($_W['shopset']['shop']['saleout'])}
+						{if $item['total']<=0}<div class="salez" style="background-image: url('{php echo tomedia($_W['shopset']['shop']['saleout'])}'); "></div>{/if}
+						{else}
+						{if $item['total']<=0}<div class="salez" style="background-image: url('{php echo tomedia('../addons/ewei_shopv2/static/images/shouqin.png')}'); "></div>{/if}
+						{/if}
+					</div>
+				</a>
+				<div class="detail">
+					<a href="{php echo mobileUrl('goods/detail', array('id'=>$item['id']))}">
+						<div class="name">
+							{if $item['ispresell']==1}<i class="fui-tag fui-tag-danger">预售</i>{/if}
+							{if $item['type']==9}<span class="cycle-tip" style="top:0rem;">周期购</span>{/if}
+							{$item['title']}
+						</div>
+					</a>
+					<div class="price" style="margin-top: 0.3rem">
+						<span class="text">￥{$item['minprice']}</span>
+						{if $item['type']==9}
+							<a href="{php echo mobileUrl('cycelbuy/goods/detail', array('id'=>$item['id']))}"><span class="cycelbuy">详情</span></a>
+						{else}
+							<span class="buy">购买</span>
+						{/if}
+
+						<!--购物车数量-->
+						{if $item['total1']>0}
+						<div class="buy-cart-num">
+							<span>{$item['total1']}</span>
+						</div>
+                        {elseif $item['total1']>99}
+                        <div class="buy-cart-num">
+							<span>99+</span>
+						</div>
+                        {/if}
+					</div>
+				</div>
+			</div>
+		{/loop}
+	</div>
+{/if}

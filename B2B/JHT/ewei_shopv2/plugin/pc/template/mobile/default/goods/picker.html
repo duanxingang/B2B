@@ -1,0 +1,72 @@
+<style>
+    .fui-cell-params li{
+        list-style-type:none;
+        line-height: 30px;
+        font-size: 0.7rem;
+    }
+</style>
+<script type="text/html" id="option-picker">
+    <div class="option-picker">
+
+        <div class="option-picker-inner" style="max-width:800px;margin: 0px auto">
+            <div class="option-picker-cell goodinfo">
+                <div class="closebtn"><i class="icon icon-roundclose"></i></div>
+                <div class="img"><img class='thumb' src="<%goods.thumb%>"/></div>
+                <div class="info info-price text-danger"><span>￥<span class='price'><%if goods.maxprice == goods.minprice%><%goods.minprice%><%else%><%goods.minprice%>~<%goods.maxprice%><%/if%></span></span>
+                </div>
+                <div class="info info-total">
+                    <%if goods.showtotal != 0%>库存 <span class='total text-danger'><%goods.total%></span> 件<%/if%>
+                </div>
+                <div class="info info-titles"><%if specs.length>0%>请选择规格<%/if%></div>
+            </div>
+            <div class="option-picker-options">
+                <%each specs as spec%>
+                <div class="option-picker-cell option spec">
+                    <div class="title"><%spec.title%></div>
+                    <div class="select">
+                        <%each spec.items as item%>
+                        <a href="javascript:;" class="btn btn-default btn-sm nav spec-item" data-id="<%item.id%>"
+                           data-thumb="<%item.thumb%>"> <%item.title%> </a>
+                        <%/each%>
+                    </div>
+                </div>
+                <%/each%>
+                <%=diyformhtml%>
+                <div class="fui-cell-group">
+                    <div class="fui-cell">
+                        <div class="fui-cell-label">数量</div>
+                        <div class="fui-cell-info"></div>
+                        <div class="fui-cell-mask noremark">
+                            <div class="fui-number">
+                                <div class="minus">-</div>
+                                <input class="num" type="tel" name="" value="1"/>
+                                <div class="plus ">+</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--商品参数-->
+                <div class="fui-cell-group" style="margin-bottom: 0.5rem">
+                    <div class="fui-cell">
+                        <ul class="fui-cell-params">
+                            <li>规格：<%goods.gg%></li>
+                            <li>批号：<%goods.ph%></li>
+                            <li>有效期：<%goods.xq%></li>
+                            <li>生产日期：<%goods.cq%></li>
+                            <li>生产厂家：<%goods.cj%></li>
+                            <li style="font-size: .4rem;line-height: 15px;margin-top: 5px;">温馨提示：部分商品包装更换频繁，如货品与图片不完全一致，请以收到的商品实物为准。如页面存在有效期信息，为库存产品最近有效期，实际产品有效期以到货产品有效期为准。</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <div class="fui-navbar" style="max-width:800px">
+                <a href="javascript:;" class="nav-item btn cartbtn" style='display:none'>加入购物车</a>
+                <a href="javascript:;" class="nav-item btn buybtn" style='display:none'>立刻购买</a>
+                <a href="javascript:;" class="nav-item btn confirmbtn" style='display:none'>确定</a>
+            </div>
+        </div>
+    </div>
+</script>
