@@ -5,9 +5,8 @@ if (!defined('IN_IA')) {
 
 class Index_EweiShopV2Page extends MobileLoginPage {
 
-    //多商户
+    //多商户 1-2-3
     protected function merchData() {
-        //商户启动测试
         $merch_plugin = p('merch');
         $merch_data = m('common')->getPluginset('merch');
         if ($merch_plugin && $merch_data['is_openmerch']) {
