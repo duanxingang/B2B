@@ -2647,12 +2647,11 @@ EOF;
 
         $openid = $_W['openid'];
         $uniacid = $_W['uniacid'];
-        $type = $_GPC['goods'][0]['type']; //订单类型 开票or不开票
+        $goodsid = $_GPC['goods'][0]['goodsid']; //订单类型 开票or不开票
         $real_price = $_GPC['real_price'];//优惠券使用的价格
         $cardid = intval($_GPC['card_id']);//会员卡ID
 
         $open_redis = function_exists('redis') && !is_error(redis());
-
         if( $open_redis ) {
             $redis_key = "{$_W['uniacid']}_order_submit_{$openid}";
             $redis = redis();
@@ -2682,7 +2681,8 @@ EOF;
         }
 
         //起订金额  若当天有下单(开票)，则不开票订单不限额2019-10-15
-        if($type == 0){
+        $type = pdo_getcolumn('ewei_shop_goods', array('id' => $goodsid), 'isbill');
+        if($type == 0 || empty($type)){
             $data = m('common')->getSysset('trade');
             if(!empty($data['shop_order_start'])){
                 if($_GPC['real_price'] < $data['shop_order_start']){
